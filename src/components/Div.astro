@@ -1,0 +1,47 @@
+---
+import { twMerge } from "tailwind-merge";
+import { pop } from "@/utils/utils";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+const classList = (className || "").split(" ").map((c) => c.trim());
+
+const row = pop(classList, "row");
+// col regex is col-<number from 1 to 12>
+const col = pop(classList, /col-\d+/);
+
+const rest = classList.join(" ");
+---
+
+{
+  col ? (
+    <th class={twMerge(col)}>
+      <table class={twMerge("w-full", rest)}>
+        <tbody>
+          <tr>
+            <td class={twMerge("")}>
+              <slot />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </th>
+  ) : (
+    <table class={twMerge("w-full", row, rest)}>
+      <tbody>
+        <tr>
+          {row ? (
+            <slot />
+          ) : (
+            <td class={twMerge("")}>
+              <slot />
+            </td>
+          )}
+        </tr>
+      </tbody>
+    </table>
+  )
+}

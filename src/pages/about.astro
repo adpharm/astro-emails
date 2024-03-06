@@ -1,0 +1,29 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Div from "@/components/Div.astro";
+import Row from "@/components/Row.astro";
+import Col from "@/components/Col.astro";
+import Lang from "@/components/Lang.astro";
+import Link from "@/components/Link.astro";
+
+interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+---
+
+<Layout title="Welcome to Astro.">
+  <Div class="bg-gray-400 max-w-[700px] mx-auto">
+    <p>I am a simple P tag</p>
+    <div class="text-blue-500">
+      <p class="inline-block">Hey</p>
+      <p class="inline-block">There</p>
+    </div>
+
+    <Div class="row">
+      <Div class="bg-blue-100 col-1">Col 1</Div>
+      <Div class="bg-purple-100 col-2">Col 2</Div>
+    </Div>
+  </Div>
+</Layout>

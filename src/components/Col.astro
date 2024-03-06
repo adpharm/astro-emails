@@ -1,0 +1,29 @@
+---
+import type { IntRange } from "@/utils/types";
+
+interface Props {
+  class?: string;
+  small?: IntRange<1, 13>;
+  large?: IntRange<1, 13>;
+
+  // TODO: automate these like ink does... https://get.foundation/emails/docs/grid.html
+  first?: boolean;
+  last?: boolean;
+}
+
+const { class: className, small, large, first, last } = Astro.props;
+
+const _small: typeof small = small ?? 12;
+const _large: typeof large = large ?? _small;
+---
+
+<th class={`small-${_small} large-${_large} columns ${first ? "first" : last ? "last" : ""} ${className || ""}`}>
+  <table>
+    <tr>
+      <th>
+        <slot />
+      </th>
+      <th class="expander"></th>
+    </tr>
+  </table>
+</th>

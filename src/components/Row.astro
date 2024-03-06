@@ -1,0 +1,16 @@
+---
+interface Props {
+  class?: string;
+  gutters0?: boolean;
+}
+
+const { class: className, gutters0 } = Astro.props;
+---
+
+<table class={`row ${gutters0 ? "gutters-0" : ""} ${className || ""}`}>
+  <tbody>
+    <tr>
+      <slot />
+    </tr>
+  </tbody>
+</table>&zwj;

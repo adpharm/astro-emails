@@ -1,0 +1,40 @@
+---
+import { twMerge } from "tailwind-merge";
+import { pop } from "@/utils/utils";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+const classList = (className || "").split(" ").map((c) => c.trim());
+
+const width = pop(classList, /^w-/);
+// margin regex is m-<size>, mx-<size>, my-<size>, mt-<size>, mr-<size>, mb-<size>, ml-<size>
+const margin = pop(classList, /^m(?:x|y|t|r|b|l)?-/);
+// text-align regex is text-<left | center | right>
+// const textAlign = pop(classList, /^text-(?:left|center|right)/);
+
+// rest
+const rest = classList.join(" ");
+---
+
+<table class={twMerge(width, margin)}>
+  <tbody>
+    <tr>
+      <td>
+        <table class={twMerge(width)}>
+          <tbody>
+            <tr>
+              <td>
+                <a href="#" class={twMerge("inline-block", rest, width)}>
+                  <slot />
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,17 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<table class={`wrapper ${className || ""}`} align="center">
+  <tbody>
+    <tr>
+      <td class="wrapper-inner">
+        <slot />
+      </td>
+    </tr>
+  </tbody>
+</table>

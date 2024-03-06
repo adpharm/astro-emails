@@ -1,0 +1,17 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<table align="center" class={`container ${className || ""}`}>
+  <tbody>
+    <tr>
+      <td>
+        <slot />
+      </td>
+    </tr>
+  </tbody>
+</table>

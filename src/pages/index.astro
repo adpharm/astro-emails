@@ -1,0 +1,36 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Wrapper from "@/components/Wrapper.astro";
+import Container from "@/components/Container.astro";
+import Row from "@/components/Row.astro";
+import Col from "@/components/Col.astro";
+import Lang from "@/components/Lang.astro";
+import Link from "@/components/Link.astro";
+
+interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+---
+
+<Layout title="Welcome to Astro.">
+  <Wrapper>
+    <Container>
+      <Row>
+        <Col>
+          <Lang lang={lang}>
+            <p>Hello, I am a paragraph tag.</p>
+            <p slot="fr">Bonjour, je suis un paragraphe.</p>
+          </Lang>
+
+          <p>
+            <Lang lang={lang} en="Hello, I am a paragraph tag." fr="Bonjour, je suis un paragraphe." />
+          </p>
+
+          <Link class="text-center mx-auto w-40 rounded-full text-blue-500 text-xl bg-gray-200">I am a link</Link>
+        </Col>
+      </Row>
+    </Container>
+  </Wrapper>
+</Layout>

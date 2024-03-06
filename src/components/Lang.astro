@@ -1,0 +1,26 @@
+---
+/**
+ * This component is used to display a string/element in the correct language.
+ *
+ * If you are just passing a string, you can use the `en` and `fr` props.
+ *
+ * If you are passing an element, you can use the `en` and `fr` slots (note: there is no need to name the `en` slot).
+ */
+interface Props {
+  lang: string;
+  en?: string;
+  fr?: string;
+}
+
+const { lang, en: enString, fr: frString } = Astro.props;
+---
+
+{
+  lang === "fr"
+    ? frString || <slot name="fr" />
+    : enString || (
+        <slot name="en">
+          <slot />
+        </slot>
+      )
+}
