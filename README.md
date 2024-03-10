@@ -4,12 +4,17 @@ Using Astro to build emails.
 
 ## Resources
 
+- [caniemail](https://www.caniemail.com/)
 - Coding emails best practices
   - [Litmus - Outlook Email Rendering Issues and How to Solve Them](https://www.litmus.com/blog/a-guide-to-rendering-differences-in-microsoft-outlook-clients)
   - [Litmus - Understanding Retina Images in HTML Email](https://www.litmus.com/blog/understanding-retina-images-in-html-email)
   - [Litmus - 7 Interactive Emails for Inspiration](https://www.litmus.com/blog/interactive-emails-top-trend-anyone-using)
   - [Parcel - How to Target Email Clients](https://www.howtotarget.email/)
+  - [Campaign Monitor - The Ultimate Guide to CSS](https://www.campaignmonitor.com/css)
+  - [Litmus - Outlook Overview](https://litmus.com/community/learning/8-outlook-overview)
+  - [Litmus - Your Guide to Bulletproof Email Buttons that Work](https://www.litmus.com/blog/a-guide-to-bulletproof-buttons-in-email-design)
 - [Foundation for Emails docs](https://get.foundation/emails/docs/index.html)
+- [tailwindcss core plugins ref](https://tailwindcss.com/docs/configuration#core-plugins)
 
 ## 🧞 Commands
 

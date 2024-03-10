@@ -1,16 +1,22 @@
 ---
+import { twMerge } from "tailwind-merge";
+import { pop } from "@/utils/utils";
+
 interface Props {
   class?: string;
-  gutters0?: boolean;
 }
 
-const { class: className, gutters0 } = Astro.props;
+const { class: className } = Astro.props;
+
+const classList = (className || "").split(" ").map((c) => c.trim());
+
+const rest = classList.join(" ");
 ---
 
-<table class={`row ${gutters0 ? "gutters-0" : ""} ${className || ""}`}>
+<table align="center" class={twMerge("w-full", rest)} cellpadding="0" cellspacing="0" border="0" role="presentation">
   <tbody>
     <tr>
       <slot />
     </tr>
   </tbody>
-</table>&zwj;
+</table>

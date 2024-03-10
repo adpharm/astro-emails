@@ -17,6 +17,7 @@ const { lang } = Astro.props;
 <Layout title="OnTract Demo">
   <Div class="mx-auto max-w-[800px]">
     <Div class="bg-blue-950">
+      <!-- no padding allowed on a, p, div -->
       <a href="#" class="py-2 inline-block w-full text-center text-xs text-white no-underline">
         Email not loading correctly? Click here to view in browser
       </a>
@@ -50,16 +51,16 @@ const { lang } = Astro.props;
       <p class="mt-10">After participating in the program, attendees will be able to:</p>
     </Div>
 
-    <Div class="row">
-      <Div class="col-6 bg-blue-100">
+    <Row>
+      <Col class="w-1/2 bg-blue-100">
         <p>I am left content</p>
-      </Div>
-      <Div class="col-5 border border-red-500 bg-red-100">
-        <Div class="row">
-          <Div class="w-3/12 bg-red-200">I may be an image or some shit</Div>
-          <Div class="w-7/12 bg-red-300">Yeah, me too jerkoff</Div>
-        </Div>
-      </Div>
-    </Div>
+      </Col>
+      <Col class="w-1/2 border border-red-500 bg-red-100">
+        <Row>
+          <Col class="w-3/12 bg-red-200">I may be an image or some</Col>
+          <Col class="w-8/12 bg-red-300">Yeah, me too</Col>
+        </Row>
+      </Col>
+    </Row>
   </Div>
 </Layout>

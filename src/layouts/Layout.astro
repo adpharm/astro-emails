@@ -3,25 +3,51 @@ import rawStylesCSS from "../assets/compiled-styles.css?raw";
 
 interface Props {
   title: string;
+  lang: "en" | "CA-fr";
+  previewText: string;
 }
 
-const { title } = Astro.props;
+const { title, lang = "en", previewText = "" } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html
+  lang={lang}
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:v="urn:schemas-microsoft-com:vml"
+>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="description" content="Astro description" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
+    <meta charset="utf-8" />
+    <meta name="x-apple-disable-message-reformatting" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no, url=no" />
+    <!--[if mso]>
+    <noscript>
+      <xml>
+        <o:OfficeDocumentSettings xmlns:o="urn:schemas-microsoft-com:office:office">
+          <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+      </xml>
+    </noscript>
+    <style>
+      td,th,div,p,a,h1,h2,h3,h4,h5,h6 {font-family: "Segoe UI", sans-serif; mso-line-height-rule: exactly;}
+    </style>
+    <![endif]-->
     <title>{title}</title>
 
     <!-- tailwind classes -->
     <style is:inline set:html={rawStylesCSS}></style>
   </head>
   <body>
+    <div style="display: none; max-height: 0px; overflow: hidden;">{previewText}</div>
+
+    <!-- Insert &#847;&zwnj;&nbsp; hack after hidden preview text -->
+    <div style="display: none; max-height: 0px; overflow: hidden;">
+      &#847; &zwnj; &nbsp; &#8199; &shy; &#847; &zwnj; &nbsp; &#8199; &shy; &#847; &zwnj; &nbsp; &#8199; &shy; &#847;
+      &zwnj; &nbsp; &#8199; &shy; &#847; &zwnj; &nbsp; &#8199; &shy; &#847; &zwnj; &nbsp; &#8199; &shy; &#847; &zwnj;
+      &nbsp; &#8199; &shy; &#847; &zwnj; &nbsp; &#8199; &shy;
+    </div>
     <slot />
   </body>
 </html>

@@ -1,23 +1,32 @@
 ---
-import type { IntRange } from "@/utils/types";
+import { twMerge } from "tailwind-merge";
+import { pop } from "@/utils/utils";
 
 interface Props {
   class?: string;
-  small?: IntRange<1, 13>;
-  large?: IntRange<1, 13>;
-
-  // TODO: automate these like ink does... https://get.foundation/emails/docs/grid.html
-  first?: boolean;
-  last?: boolean;
 }
 
-const { class: className, small, large, first, last } = Astro.props;
+const { class: className } = Astro.props;
+const classList = (className || "").split(" ").map((c) => c.trim());
 
-const _small: typeof small = small ?? 12;
-const _large: typeof large = large ?? _small;
+// width is of the format w-<number from 1 to 12>/<number from 1 to 12> or w-<number from 1 to 12>
+const width = pop(classList, /w-\d+\/\d+|w-\d+/);
+
+const rest = classList.join(" ");
 ---
 
-<th class={`small-${_small} large-${_large} columns ${first ? "first" : last ? "last" : ""} ${className || ""}`}>
+<th class={twMerge("w-full", width)}>
+  <table align="center" class={twMerge("w-full", rest)} cellpadding="0" cellspacing="0" border="0" role="presentation">
+    <tbody>
+      <th>
+        <slot />
+      </th>
+      <th class="expander"></th>
+    </tbody>
+  </table>
+</th>
+
+<!-- <th class={`small-${_small} large-${_large} columns ${first ? "first" : last ? "last" : ""} ${className || ""}`}>
   <table>
     <tr>
       <th>
@@ -26,4 +35,4 @@ const _large: typeof large = large ?? _small;
       <th class="expander"></th>
     </tr>
   </table>
-</th>
+</th> -->

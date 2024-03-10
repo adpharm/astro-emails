@@ -30,6 +30,19 @@ const { lang } = Astro.props;
 
           <Link class="text-center mx-auto w-40 rounded-full text-blue-500 text-xl bg-gray-200">I am a link</Link>
         </Col>
+
+        <Col>
+          <Lang lang={lang}>
+            <p>Hello, I am a paragraph tag.</p>
+            <p slot="fr">Bonjour, je suis un paragraphe.</p>
+          </Lang>
+
+          <p>
+            <Lang lang={lang} en="Hello, I am a paragraph tag." fr="Bonjour, je suis un paragraphe." />
+          </p>
+
+          <Link class="text-center mx-auto w-40 rounded-full text-blue-500 text-xl bg-gray-200">I am a link</Link>
+        </Col>
       </Row>
     </Container>
   </Wrapper>

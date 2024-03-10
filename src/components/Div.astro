@@ -9,39 +9,18 @@ interface Props {
 const { class: className } = Astro.props;
 const classList = (className || "").split(" ").map((c) => c.trim());
 
-const row = pop(classList, "row");
-// col regex is col-<number from 1 to 12>
-const col = pop(classList, /col-\d+/);
+// padding regex is p-<number from 1 to 12>, px-<number from 1 to 12>, py-<number from 1 to 12>, pt-<number from 1 to 12>, pr-<number from 1 to 12>, pb-<number from 1 to 12>, pl-<number from 1 to 12>
+const padding = pop(classList, /(p|px|py|pt|pr|pb|pl)-\d+/);
 
 const rest = classList.join(" ");
 ---
 
-{
-  col ? (
-    <th class={twMerge(col)}>
-      <table class={twMerge("w-full", rest)}>
-        <tbody>
-          <tr>
-            <td class={twMerge("")}>
-              <slot />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </th>
-  ) : (
-    <table class={twMerge("w-full", row, rest)}>
-      <tbody>
-        <tr>
-          {row ? (
-            <slot />
-          ) : (
-            <td class={twMerge("")}>
-              <slot />
-            </td>
-          )}
-        </tr>
-      </tbody>
-    </table>
-  )
-}
+<table align="center" class={twMerge("w-full", rest)} cellpadding="0" cellspacing="0" border="0" role="presentation">
+  <tbody>
+    <tr>
+      <td align="center" class={twMerge(padding)}>
+        <slot />
+      </td>
+    </tr>
+  </tbody>
+</table>
