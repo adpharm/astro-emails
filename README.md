@@ -15,6 +15,7 @@ Using Astro to build emails.
   - [Litmus - Your Guide to Bulletproof Email Buttons that Work](https://www.litmus.com/blog/a-guide-to-bulletproof-buttons-in-email-design)
 - [Foundation for Emails docs](https://get.foundation/emails/docs/index.html)
 - [tailwindcss core plugins ref](https://tailwindcss.com/docs/configuration#core-plugins)
+- [CSS Fonts - How safe are your fonts?](https://www.cssfontstack.com/)
 
 ## 🧞 Commands
 

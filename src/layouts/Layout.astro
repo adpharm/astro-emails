@@ -1,27 +1,27 @@
 ---
+import type { ComponentProps } from "@/utils/types";
 import rawStylesCSS from "../assets/compiled-styles.css?raw";
+import Div from "@/components/Div.astro";
 
-interface Props {
-  title: string;
-  lang: "en" | "CA-fr";
+interface Props extends ComponentProps {
+  subject: string;
   previewText: string;
 }
 
-const { title, lang = "en", previewText = "" } = Astro.props;
+const { subject, lang = "en", previewText } = Astro.props;
 ---
 
 <!doctype html>
-<html
-  lang={lang}
-  xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:o="urn:schemas-microsoft-com:office:office"
-  xmlns:v="urn:schemas-microsoft-com:vml"
->
+{/* @ts-expect-error sdjf */}
+<html lang={lang} xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml">
   <head>
     <meta charset="utf-8" />
     <meta name="x-apple-disable-message-reformatting" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {/* From https://maizzle.com */}
     <meta name="format-detection" content="telephone=no, date=no, address=no, email=no, url=no" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="supported-color-schemes" content="light dark" />
     <!--[if mso]>
     <noscript>
       <xml>
@@ -34,20 +34,157 @@ const { title, lang = "en", previewText = "" } = Astro.props;
       td,th,div,p,a,h1,h2,h3,h4,h5,h6 {font-family: "Segoe UI", sans-serif; mso-line-height-rule: exactly;}
     </style>
     <![endif]-->
-    <title>{title}</title>
+    <title>{subject}</title>
 
     <!-- tailwind classes -->
     <style is:inline set:html={rawStylesCSS}></style>
   </head>
   <body>
-    <div style="display: none; max-height: 0px; overflow: hidden;">{previewText}</div>
+    <div style="display: none; max-height: 0px; overflow: hidden;">{previewText}&zwj;</div>
 
-    <!-- Insert &#847;&zwnj;&nbsp; hack after hidden preview text -->
     <div style="display: none; max-height: 0px; overflow: hidden;">
       &#847; &zwnj; &nbsp; &#8199; &shy; &#847; &zwnj; &nbsp; &#8199; &shy; &#847; &zwnj; &nbsp; &#8199; &shy; &#847;
       &zwnj; &nbsp; &#8199; &shy; &#847; &zwnj; &nbsp; &#8199; &shy; &#847; &zwnj; &nbsp; &#8199; &shy; &#847; &zwnj;
       &nbsp; &#8199; &shy; &#847; &zwnj; &nbsp; &#8199; &shy;
     </div>
-    <slot />
+
+    <div role="article" aria-roledescription="email" aria-label={subject} lang={lang}>
+      <Div class="w-[800px]">
+        <slot />
+      </Div>
+    </div>
   </body>
 </html>
+
+{import.meta.env.DEV && (
+<>
+  {/* dev only! (we'll mimick this behaviour in prod in JS) */}
+  <style is:global>
+    /* one item */
+    .col:nth-child(1):nth-last-child(1) {
+      width: 100%;
+    }
+
+    /* two items */
+    .col:nth-child(1):nth-last-child(2),
+    .col:nth-child(2):nth-last-child(1) {
+      width: 50%;
+    }
+
+    /* three items */
+    .col:nth-child(1):nth-last-child(3),
+    .col:nth-child(2):nth-last-child(2),
+    .col:nth-child(3):nth-last-child(1) {
+      width: 33.3333%;
+    }
+
+    /* four items */
+    .col:nth-child(1):nth-last-child(4),
+    .col:nth-child(2):nth-last-child(3),
+    .col:nth-child(3):nth-last-child(2),
+    .col:nth-child(4):nth-last-child(1) {
+      width: 25%;
+    }
+
+    /* five items */
+    .col:nth-child(1):nth-last-child(5),
+    .col:nth-child(2):nth-last-child(4),
+    .col:nth-child(3):nth-last-child(3),
+    .col:nth-child(4):nth-last-child(2),
+    .col:nth-child(5):nth-last-child(1) {
+      width: 20%;
+    }
+
+    /* six items */
+    .col:nth-child(1):nth-last-child(6),
+    .col:nth-child(2):nth-last-child(5),
+    .col:nth-child(3):nth-last-child(4),
+    .col:nth-child(4):nth-last-child(3),
+    .col:nth-child(5):nth-last-child(2),
+    .col:nth-child(6):nth-last-child(1) {
+      width: 16.6667%;
+    }
+
+    /* seven items */
+    .col:nth-child(1):nth-last-child(7),
+    .col:nth-child(2):nth-last-child(6),
+    .col:nth-child(3):nth-last-child(5),
+    .col:nth-child(4):nth-last-child(4),
+    .col:nth-child(5):nth-last-child(3),
+    .col:nth-child(6):nth-last-child(2),
+    .col:nth-child(7):nth-last-child(1) {
+      width: 14.2857%;
+    }
+
+    /* eight items */
+    .col:nth-child(1):nth-last-child(8),
+    .col:nth-child(2):nth-last-child(7),
+    .col:nth-child(3):nth-last-child(6),
+    .col:nth-child(4):nth-last-child(5),
+    .col:nth-child(5):nth-last-child(4),
+    .col:nth-child(6):nth-last-child(3),
+    .col:nth-child(7):nth-last-child(2),
+    .col:nth-child(8):nth-last-child(1) {
+      width: 12.5%;
+    }
+
+    /* nine items */
+    .col:nth-child(1):nth-last-child(9),
+    .col:nth-child(2):nth-last-child(8),
+    .col:nth-child(3):nth-last-child(7),
+    .col:nth-child(4):nth-last-child(6),
+    .col:nth-child(5):nth-last-child(5),
+    .col:nth-child(6):nth-last-child(4),
+    .col:nth-child(7):nth-last-child(3),
+    .col:nth-child(8):nth-last-child(2),
+    .col:nth-child(9):nth-last-child(1) {
+      width: 11.1111%;
+    }
+
+    /* ten items */
+    .col:nth-child(1):nth-last-child(10),
+    .col:nth-child(2):nth-last-child(9),
+    .col:nth-child(3):nth-last-child(8),
+    .col:nth-child(4):nth-last-child(7),
+    .col:nth-child(5):nth-last-child(6),
+    .col:nth-child(6):nth-last-child(5),
+    .col:nth-child(7):nth-last-child(4),
+    .col:nth-child(8):nth-last-child(3),
+    .col:nth-child(9):nth-last-child(2),
+    .col:nth-child(10):nth-last-child(1) {
+      width: 10%;
+    }
+
+    /* eleven items */
+    .col:nth-child(1):nth-last-child(11),
+    .col:nth-child(2):nth-last-child(10),
+    .col:nth-child(3):nth-last-child(9),
+    .col:nth-child(4):nth-last-child(8),
+    .col:nth-child(5):nth-last-child(7),
+    .col:nth-child(6):nth-last-child(6),
+    .col:nth-child(7):nth-last-child(5),
+    .col:nth-child(8):nth-last-child(4),
+    .col:nth-child(9):nth-last-child(3),
+    .col:nth-child(10):nth-last-child(2),
+    .col:nth-child(11):nth-last-child(1) {
+      width: 9.0909%;
+    }
+
+    /* twelve items */
+    .col:nth-child(1):nth-last-child(12),
+    .col:nth-child(2):nth-last-child(11),
+    .col:nth-child(3):nth-last-child(10),
+    .col:nth-child(4):nth-last-child(9),
+    .col:nth-child(5):nth-last-child(8),
+    .col:nth-child(6):nth-last-child(7),
+    .col:nth-child(7):nth-last-child(6),
+    .col:nth-child(8):nth-last-child(5),
+    .col:nth-child(9):nth-last-child(4),
+    .col:nth-child(10):nth-last-child(3),
+    .col:nth-child(11):nth-last-child(2),
+    .col:nth-child(12):nth-last-child(1) {
+      width: 8.3333%;
+    }
+  </style>
+</>
+)}
