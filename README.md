@@ -13,6 +13,7 @@ Using Astro to build emails.
   - [Campaign Monitor - The Ultimate Guide to CSS](https://www.campaignmonitor.com/css)
   - [Litmus - Outlook Overview](https://litmus.com/community/learning/8-outlook-overview)
   - [Litmus - Your Guide to Bulletproof Email Buttons that Work](https://www.litmus.com/blog/a-guide-to-bulletproof-buttons-in-email-design)
+  - [Litmus - Responsive vs. Hybrid emails](https://www.litmus.com/blog/understanding-responsive-and-hybrid-email-design)
 - [Foundation for Emails docs](https://get.foundation/emails/docs/index.html)
 - [tailwindcss core plugins ref](https://tailwindcss.com/docs/configuration#core-plugins)
 - [CSS Fonts - How safe are your fonts?](https://www.cssfontstack.com/)
