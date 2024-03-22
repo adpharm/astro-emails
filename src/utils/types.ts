@@ -10,8 +10,8 @@ export interface ComponentProps {
 
 type OutlookVersions = "2000" | "2002" | "2003" | "2007" | "2010" | "2013" | "2016" | "2019";
 export interface OutlookTagProps {
-  onlyVersions: OutlookVersions;
-  notVersions: OutlookVersions;
-  onlyVersionsGreaterThanOrEqualTo: OutlookVersions;
-  onlyVersionsLessThanOrEqualTo: OutlookVersions;
+  onlyVersions?: OutlookVersions;
+  notVersions?: OutlookVersions;
+  onlyVersionsGreaterThanOrEqualTo?: OutlookVersions;
+  onlyVersionsLessThanOrEqualTo?: OutlookVersions;
 }

@@ -7,13 +7,14 @@ Using Astro to build emails.
 - [ ]: Auto-VML - i.e. no components, all done behind the scenes.
   - Ref: https://maizzle.com/docs/components/vml
 - [ ]: Can I use [`postcss-preset-env`](https://www.npmjs.com/package/postcss-preset-env) for emails?
+- [ ]: Images get clipped by Gmail at 102kb. We should warn ourselves!
 - Maybe:
-  - [ ] Remove unused CSS (needed?). See https://maizzle.com/docs/transformers/remove-unused-css
   - [ ] Base URL (for images, etc.). See https://maizzle.com/docs/transformers/base-url
   - [ ] URL parameters (for tracking, etc.). See https://maizzle.com/docs/transformers/url-parameters
   - [ ] Widow words could be useful. See https://maizzle.com/docs/transformers/widows
-  - [ ] Replace strings in files? See https://maizzle.com/docs/transformers/replace-strings
-  - [x] HTML minify - Astro does some for us so... needed? I'm putting it in anyway.
+  - [ ] Batch replace strings in files? See https://maizzle.com/docs/transformers/replace-strings
+- [x] Remove unused CSS (for minification). See https://maizzle.com/docs/transformers/remove-unused-css
+- [x] HTML minify - Astro does some for us so... needed? I'm putting it in anyway.
 - [x] Create "Safe class names" (ex. replacing `:`)
   - Refs: https://maizzle.com/docs/transformers/safe-class-names
 
@@ -30,6 +31,7 @@ Using Astro to build emails.
   - [Litmus - Your Guide to Bulletproof Email Buttons that Work](https://www.litmus.com/blog/a-guide-to-bulletproof-buttons-in-email-design)
   - [Litmus - Responsive vs. Hybrid emails](https://www.litmus.com/blog/understanding-responsive-and-hybrid-email-design)
   - [Litmus - The ultimate guide to bulleted lists](https://www.litmus.com/blog/the-ultimate-guide-to-bulleted-lists-in-html-email)
+  - [Sitepoint - Essential Tips and Tricks for Coding HTML Emails](https://www.sitepoint.com/html-email-tips-tricks/)
 - [Foundation for Emails docs](https://get.foundation/emails/docs/index.html)
 - [tailwindcss core plugins ref](https://tailwindcss.com/docs/configuration#core-plugins)
 - [CSS Fonts - How safe are your fonts?](https://www.cssfontstack.com/)

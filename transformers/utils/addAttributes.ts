@@ -14,7 +14,7 @@ export async function addAttributes(htmlfile: string) {
     table: {
       cellpadding: 0,
       cellspacing: 0,
-      role: "none",
+      role: "none", // or "presentation" ??
     },
     img: {
       alt: "",

@@ -31,26 +31,33 @@ export async function purgeCSS(htmlfile: string) {
     "*edo*", // Edison (all)
     "#*", // Freenet uses #msgBody
     ".lang*", // Fenced code blocks
+    // leave @media queries alone matcher
+    "@media*",
   ];
 
-  const htmlWithoutInlinedSelectors = await purgeInlineClasses(htmlfile, safelist);
+  const { html: htmlWithoutInlinedSelectors, globalSafelist } = await purgeInlineClasses(htmlfile, safelist);
 
   return comb(htmlWithoutInlinedSelectors, {
     // options from: https://maizzle.com/docs/transformers/remove-unused-css#backend
     backend: [
-      { heads: "{{", tails: "}}" },
-      { heads: "{%", tails: "%}" },
+      // { heads: "{{", tails: "}}" },
+      // { heads: "{%", tails: "%}" },
     ],
+    whitelist: [...safelist, ...globalSafelist],
   }).result;
 }
 
 async function purgeInlineClasses(htmlfile: string, safelist: string[] = []) {
-  return posthtml([
+  const globalSafelist: string[] = [];
+
+  const res = await posthtml([
     (tree) => {
       const process: posthtml.NodeCallback = (node) => {
-        if (!node.attrs) {
-          return node;
-        }
+        // console.log("node", node.tag);
+
+        // if (!node.attrs) return node;
+
+        // console.log("node", node.tag);
 
         if (node.tag !== "style") return node;
         if (!node.content) return node;
@@ -64,6 +71,7 @@ async function purgeInlineClasses(htmlfile: string, safelist: string[] = []) {
           if (["media", "supports"].includes(rule.name)) {
             rule.walkRules((rule) => {
               preservedClasses.push(rule.selector);
+              globalSafelist.push(rule.selector);
             });
           }
         });
@@ -132,7 +140,10 @@ async function purgeInlineClasses(htmlfile: string, safelist: string[] = []) {
 
       return tree.walk(process);
     },
-  ])
-    .process(htmlfile)
-    .then((result) => result.html);
+  ]).process(htmlfile);
+
+  return {
+    html: res.html,
+    globalSafelist,
+  };
 }

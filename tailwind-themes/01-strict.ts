@@ -14,8 +14,9 @@ import { borderClasses } from "./borderClasses.ts";
 export const tailwindStrictConfig: Partial<RequiredConfig> & Partial<OptionalConfig> = {
   theme: {
     screens: {
-      lg: { min: "426px" },
+      // NOTE: ordering matters here!!
       sm: { min: "0px" },
+      lg: { min: "426px" },
     },
     spacing: {
       screen: "100vw",
