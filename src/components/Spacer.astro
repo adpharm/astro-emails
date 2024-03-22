@@ -11,6 +11,7 @@ const { px, hideOnSm, hideOnLg } = Astro.props;
 <table class={`spacer ${hideOnLg ? "hide-for-large" : hideOnSm ? "show-for-large" : ""}`}>
   <tbody>
     <tr>
+      {/* @ts-expect-error no height attr on td */}
       <td height={px} style={`font-size:${px}px;line-height:${px}px;`}>&nbsp;</td>
     </tr>
   </tbody>

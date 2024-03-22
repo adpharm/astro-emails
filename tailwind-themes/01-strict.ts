@@ -13,6 +13,10 @@ import { borderClasses } from "./borderClasses.ts";
  */
 export const tailwindStrictConfig: Partial<RequiredConfig> & Partial<OptionalConfig> = {
   theme: {
+    screens: {
+      lg: { min: "426px" },
+      sm: { min: "0px" },
+    },
     spacing: {
       screen: "100vw",
       full: "100%",
@@ -372,72 +376,72 @@ export const tailwindStrictConfig: Partial<RequiredConfig> & Partial<OptionalCon
   ],
 };
 
-function borders(theme: any): {
-  [key: string]: {
-    border: string;
-  };
-} {
-  const borderWidths = {
-    0: "0",
-    1: "1px",
-    2: "2px",
-    4: "4px",
-    8: "8px",
-  };
-  const borderColorsObj = theme("colors") as Record<string, Record<string, string>>;
-  // we want values like "red-500", "black", "gray-200", etc.
-  const borderColors = Object.keys(borderColorsObj).flatMap((color) => {
-    return Object.keys(borderColorsObj[color]).map((shade) => {
-      return `${color}-${shade}`;
-    });
-  });
+// function borders(theme: any): {
+//   [key: string]: {
+//     border: string;
+//   };
+// } {
+//   const borderWidths = {
+//     0: "0",
+//     1: "1px",
+//     2: "2px",
+//     4: "4px",
+//     8: "8px",
+//   };
+//   const borderColorsObj = theme("colors") as Record<string, Record<string, string>>;
+//   // we want values like "red-500", "black", "gray-200", etc.
+//   const borderColors = Object.keys(borderColorsObj).flatMap((color) => {
+//     return Object.keys(borderColorsObj[color]).map((shade) => {
+//       return `${color}-${shade}`;
+//     });
+//   });
 
-  const borderStyles = {
-    solid: "solid",
-    dashed: "dashed",
-    dotted: "dotted",
-    double: "double",
-    // hidden: "hidden",
-    // none: "none",
-  };
+//   const borderStyles = {
+//     solid: "solid",
+//     dashed: "dashed",
+//     dotted: "dotted",
+//     double: "double",
+//     // hidden: "hidden",
+//     // none: "none",
+//   };
 
-  // combine all the possible combinations
-  // const borders = Object.keys(borderWidths).flatMap((width) => {
-  //   return Object.keys(borderColors).flatMap((color) => {
-  //     return Object.keys(borderStyles).map((style) => {
-  //       return `${width} ${style} ${color}`;
-  //     });
-  //   });
+//   // combine all the possible combinations
+//   // const borders = Object.keys(borderWidths).flatMap((width) => {
+//   //   return Object.keys(borderColors).flatMap((color) => {
+//   //     return Object.keys(borderStyles).map((style) => {
+//   //       return `${width} ${style} ${color}`;
+//   //     });
+//   //   });
 
-  const borders = Object.keys(borderWidths).flatMap((width) => {
-    return Object.keys(borderStyles).flatMap((style) => {
-      return borderColors.map((color) => {
-        return `${width} ${style} ${color}`;
-      });
-    });
-  });
-  // });
+//   const borders = Object.keys(borderWidths).flatMap((width) => {
+//     return Object.keys(borderStyles).flatMap((style) => {
+//       return borderColors.map((color) => {
+//         return `${width} ${style} ${color}`;
+//       });
+//     });
+//   });
+//   // });
 
-  // the names should be like
-  // "border-solid-black", "border-2-solid-red-500", etc.
-  const returnObj = borders.reduce((acc, border) => {
-    const [width, style, color] = border.split(" ");
+//   // the names should be like
+//   // "border-solid-black", "border-2-solid-red-500", etc.
+//   const returnObj = borders.reduce((acc, border) => {
+//     const [width, style, color] = border.split(" ");
 
-    let name = `.border-${width}-${style}-${color}`;
-    // if width is 1, we can remove it
-    if (width === "1") {
-      name = `.border-${style}-${color}`;
-    }
+//     let name = `.border-${width}-${style}-${color}`;
+//     // if width is 1, we can remove it
+//     if (width === "1") {
+//       name = `.border-${style}-${color}`;
+//     }
 
-    return {
-      ...acc,
-      [name]: {
-        border: `${width}px ${style} ${color}`,
-      },
-    };
-  }, {});
+//     return {
+//       ...acc,
+//       [name]: {
+//         border: `${width}px ${style} ${color}`,
+//       },
+//     };
+//   }, {});
 
-  console.log(returnObj);
+//   console.log(returnObj);
 
-  return returnObj;
-}
+//   return returnObj;
+// }

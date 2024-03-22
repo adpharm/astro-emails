@@ -1,0 +1,18 @@
+---
+import { type OutlookTagProps } from "@/utils/types";
+
+interface Props extends OutlookTagProps {}
+
+const { onlyVersions, onlyVersionsGreaterThanOrEqualTo, onlyVersionsLessThanOrEqualTo, notVersions } = Astro.props;
+const outlookTagProps = {
+  only: onlyVersions,
+  gte: onlyVersionsGreaterThanOrEqualTo,
+  lte: onlyVersionsLessThanOrEqualTo,
+  not: notVersions,
+};
+---
+
+{/* The <outlook></outlook> tag is from a Maizzle: https://maizzle.com/docs/tags#outlook */}
+<outlook {...outlookTagProps}>
+  <slot />
+</outlook>

@@ -5,6 +5,7 @@ import Row from "@/components/Row.astro";
 import Col from "@/components/Col.astro";
 import Link from "@/components/Link.astro";
 import Div from "@/components/Div.astro";
+import Spacer from "@/components/Spacer.astro";
 
 interface Props extends ComponentProps {}
 
@@ -14,7 +15,7 @@ const { lang } = Astro.props;
 <Layout lang={lang} subject="Welcome to Astro, Ben." previewText="">
   <Div>
     <Row>
-      <Col class="bg-gray-100 border-t-4-yellow-500 border-l-4-yellow-500">Hello</Col>
+      <Col class="bg-gray-100 border-t-4-yellow-500 border-l-4-yellow-500 sm:bg-red-100 lg:bg-blue-200">Hello</Col>
       <Col class="bg-gray-200 w-[500px]">
         <h1>Welcome to Astro</h1>
         <p>This is a simple Astro starter template. It includes a few common features to help you get started.</p>
@@ -23,6 +24,13 @@ const { lang } = Astro.props;
         </p>
       </Col>
       <Col class="bg-gray-300 border-t-4-dashed-black">Here I am</Col>
+    </Row>
+
+    <Spacer px="120" />
+
+    <Row class="py-20 bg-gray-200">
+      <Col class="border border-gray-700">Column 1</Col>
+      <Col class="border border-red-500">Column 2</Col>
     </Row>
   </Div>
 </Layout>

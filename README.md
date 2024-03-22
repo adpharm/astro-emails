@@ -2,6 +2,21 @@
 
 Using Astro to build emails.
 
+## TODO:
+
+- [ ]: Auto-VML - i.e. no components, all done behind the scenes.
+  - Ref: https://maizzle.com/docs/components/vml
+- [ ]: Can I use [`postcss-preset-env`](https://www.npmjs.com/package/postcss-preset-env) for emails?
+- Maybe:
+  - [ ] Remove unused CSS (needed?). See https://maizzle.com/docs/transformers/remove-unused-css
+  - [ ] Base URL (for images, etc.). See https://maizzle.com/docs/transformers/base-url
+  - [ ] URL parameters (for tracking, etc.). See https://maizzle.com/docs/transformers/url-parameters
+  - [ ] Widow words could be useful. See https://maizzle.com/docs/transformers/widows
+  - [ ] Replace strings in files? See https://maizzle.com/docs/transformers/replace-strings
+  - [x] HTML minify - Astro does some for us so... needed? I'm putting it in anyway.
+- [x] Create "Safe class names" (ex. replacing `:`)
+  - Refs: https://maizzle.com/docs/transformers/safe-class-names
+
 ## Resources
 
 - [caniemail](https://www.caniemail.com/)
@@ -14,6 +29,7 @@ Using Astro to build emails.
   - [Litmus - Outlook Overview](https://litmus.com/community/learning/8-outlook-overview)
   - [Litmus - Your Guide to Bulletproof Email Buttons that Work](https://www.litmus.com/blog/a-guide-to-bulletproof-buttons-in-email-design)
   - [Litmus - Responsive vs. Hybrid emails](https://www.litmus.com/blog/understanding-responsive-and-hybrid-email-design)
+  - [Litmus - The ultimate guide to bulleted lists](https://www.litmus.com/blog/the-ultimate-guide-to-bulleted-lists-in-html-email)
 - [Foundation for Emails docs](https://get.foundation/emails/docs/index.html)
 - [tailwindcss core plugins ref](https://tailwindcss.com/docs/configuration#core-plugins)
 - [CSS Fonts - How safe are your fonts?](https://www.cssfontstack.com/)
@@ -30,3 +46,7 @@ All commands are run from the root of the project, from a terminal:
 | `npm run preview`         | Preview your build locally, before deploying     |
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
+
+# Documentation
+
+To be organized at a later date.
