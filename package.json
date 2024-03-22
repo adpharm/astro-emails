@@ -6,7 +6,7 @@
     "tw": "tailwindcss -c ./tailwind.config.mjs -i ./src/assets/_styles.css -o ./src/assets/_styles-dist.css",
     "postcss": "postcss ./src/assets/_styles.css -o ./src/assets/_styles-dist.css",
     "transformers": "npm run script -- ./transformers/index.ts",
-    "dev": "concurrently \"astro dev\" \"npm run postcss -- --watch\"",
+    "dev": "npm run script -- ./build.ts",
     "start": "npm run dev",
     "_build": "npm run postcss && astro build && npm run transformers",
     "build": "astro check && npm run _build && npm run transform",
@@ -28,9 +28,9 @@
   "devDependencies": {
     "@types/lodash": "^4.17.0",
     "autoprefixer": "^10.4.19",
+    "chokidar": "^3.6.0",
     "color-shorthand-hex-to-six-digit": "^5.0.16",
     "concurrently": "^8.2.2",
-    "cssnano": "^6.1.1",
     "email-comb": "^7.0.20",
     "glob": "^10.3.10",
     "html-crush": "^6.0.18",
@@ -49,6 +49,7 @@
     "prettier": "^3.2.5",
     "string-remove-widows": "^4.0.20",
     "tailwind-merge": "^2.2.1",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "zx": "^7.2.3"
   }
 }

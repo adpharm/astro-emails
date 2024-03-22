@@ -63,6 +63,15 @@ img {
 .border-red-500 {
   border: 1px solid #ef4444;
 }
+.border-amber-500 {
+  border: 1px solid #f59e0b;
+}
+.border-indigo-500 {
+  border: 1px solid #6366f1;
+}
+.border-violet-500 {
+  border: 1px solid #8b5cf6;
+}
 .w-\[500px\] {
   width: 500px;
 }

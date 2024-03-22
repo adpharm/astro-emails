@@ -1,5 +1,3 @@
-const postcssParser = require("postcss-selector-parser");
-
 /**
  * PostCSS configuration file
  */

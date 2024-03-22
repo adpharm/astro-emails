@@ -10,10 +10,11 @@ import { parseOutlookTags } from "./utils/parseOutlookTags.ts";
 import { minifyHTML } from "./utils/minifyHTML.ts";
 import { purgeEmptyHTMLAttributes } from "./utils/purgeEmptyHTMLAttributes.ts";
 import { purgeCSS } from "./utils/purgeCSS.ts";
+
 /**
  * Our custom build
  */
-void (async function () {
+export async function transformHTML() {
   /**
    * Get all html files
    */
@@ -43,4 +44,4 @@ void (async function () {
      */
     await writeFile(file, html, "utf-8");
   }
-})();
+}
