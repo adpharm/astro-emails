@@ -4,12 +4,12 @@ Using Astro to build emails.
 
 ## TODO:
 
-- [ ]: How can we build just the file that changed? We currently build the entire `pages/` directory.
-- [ ]: Prevent building twice by separating chokidar from `ready` and `change` events.
-- [ ]: Auto-VML - i.e. no components, all done behind the scenes.
+- [ ] How can we build just the file that changed? We currently build the entire `pages/` directory.
+- [ ] Prevent building twice by separating chokidar from `ready` and `change` events.
+- [ ] Auto-VML - i.e. no components, all done behind the scenes.
   - Ref: https://maizzle.com/docs/components/vml
-- [ ]: Can I use [`postcss-preset-env`](https://www.npmjs.com/package/postcss-preset-env) for emails?
-- [ ]: Images get clipped by Gmail at 102kb. We should warn ourselves!
+- [ ] Can I use [`postcss-preset-env`](https://www.npmjs.com/package/postcss-preset-env) for emails?
+- [ ] Images get clipped by Gmail at 102kb. We should warn ourselves!
 - Maybe:
   - [ ] Base URL (for images, etc.). See https://maizzle.com/docs/transformers/base-url
   - [ ] URL parameters (for tracking, etc.). See https://maizzle.com/docs/transformers/url-parameters
