@@ -6,7 +6,8 @@
     "tw": "tailwindcss -c ./tailwind.config.mjs -i ./src/assets/_styles.css -o ./src/assets/_styles-dist.css",
     "postcss": "postcss ./src/assets/_styles.css -o ./src/assets/_styles-dist.css",
     "transformers": "npm run script -- ./transformers/index.ts",
-    "dev": "concurrently \"astro dev\" \"npm run postcss -- --watch\"",
+    "dev2": "concurrently \"astro dev\" \"npm run postcss -- --watch\"",
+    "dev": "astro dev",
     "start": "npm run dev",
     "_build": "npm run script -- ./build.ts",
     "build": "astro check && npm run _build",
@@ -50,6 +51,7 @@
     "string-remove-widows": "^4.0.20",
     "tailwind-merge": "^2.2.1",
     "ts-node": "^10.9.2",
+    "vite-plugin-inspect": "^0.8.3",
     "zx": "^7.2.3"
   }
 }
