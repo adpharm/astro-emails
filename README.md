@@ -4,6 +4,8 @@ Using Astro to build emails.
 
 ## TODO:
 
+- [ ]: How can we build just the file that changed? We currently build the entire `pages/` directory.
+- [ ]: Prevent building twice by separating chokidar from `ready` and `change` events.
 - [ ]: Auto-VML - i.e. no components, all done behind the scenes.
   - Ref: https://maizzle.com/docs/components/vml
 - [ ]: Can I use [`postcss-preset-env`](https://www.npmjs.com/package/postcss-preset-env) for emails?
