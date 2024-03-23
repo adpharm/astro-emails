@@ -10,6 +10,24 @@ export default defineConfig({
     inlineStylesheets: "always",
     // assetsPrefix: "" // e.g. https://cdn.example.com
   },
+  // vite: {
+  //   build: {
+  //     rollupOptions: {
+  //       plugins
+  //     }
+  //   }
+  // },
+  // vite: {
+  //   server: {
+  //     watch: {
+
+  //     }
+  //   },
+  //   build: {
+  //     rollupOptions: {}
+  //   }
+  // },
+  // cacheDir: "./posthtml-transformers/.astro",
   compressHTML: false,
   devToolbar: {
     enabled: false,

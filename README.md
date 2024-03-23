@@ -4,6 +4,7 @@ Using Astro to build emails.
 
 ## TODO:
 
+- [ ] Do this all in a Vite plugin????
 - [ ] How can we build just the file that changed? We currently build the entire `pages/` directory.
 - [ ] Prevent building twice by separating chokidar from `ready` and `change` events.
 - [ ] Auto-VML - i.e. no components, all done behind the scenes.

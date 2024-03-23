@@ -12,6 +12,8 @@ import addAttributesPlugin from "posthtml-extra-attributes";
 export async function addAttributes(htmlfile: string) {
   const defaultAttributes = {
     table: {
+      align: "center",
+      border: 0,
       cellpadding: 0,
       cellspacing: 0,
       role: "none", // or "presentation" ??
