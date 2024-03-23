@@ -7,7 +7,12 @@ export default defineConfig({
   build: {
     format: "file",
     assets: "_assets",
+    inlineStylesheets: "always",
     // assetsPrefix: "" // e.g. https://cdn.example.com
+  },
+  compressHTML: false,
+  devToolbar: {
+    enabled: false,
   },
   // i18n: {
   //   defaultLocale: "en",
