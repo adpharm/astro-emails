@@ -27,10 +27,6 @@ export default function createAstroEmailsIntegration(options?: AstroEmailsIntegr
       "astro:config:setup": ({ updateConfig, isRestart, logger }) => {
         if (isRestart) return;
 
-        // logger.info("📧 Initializing Astro Emails 📧");
-
-        // await buildAstro({ mode: "production", logLevel: "error" });
-
         updateConfig({
           vite: {
             plugins: [vitePluginAstroEmailsHMR()],

@@ -2,24 +2,37 @@
 
 Using Astro to build emails.
 
-## TODO:
-
-- [ ] How can we build just the file that changed? We currently build the entire `pages/` directory.
-- [ ] Auto-VML - i.e. no components, all done behind the scenes.
-  - Ref: https://maizzle.com/docs/components/vml
-- [ ] Can I use [`postcss-preset-env`](https://www.npmjs.com/package/postcss-preset-env) for emails?
-- [ ] Images get clipped by Gmail at 102kb. We should warn ourselves!
-- [ ] Report astro bug: having a JSX comment i.e. `{/* @ts-expect-error sdjf */}` ahead of `<html>` causes the `<html>`, `<head>`, and `<body>` tags to be removed during build.
+- Todo:
+  - [ ] **Make builds faster**
+    - How can we build just the file that changed? We currently build & transform the entire `pages/` and `dist/` directory.
+  - [ ] Build out Astro components
+    - [ ] Button/Clickable
+    - [ ] Link
+    - [ ] Text
+    - [ ] Image
+    - [ ] Divider (Hr)
+    - [x] IfOutlook/IfNotOutlook
+    - [x] Spacer
+    - [x] Div
+    - [x] Row
+    - [x] Col
+  - [ ] Build an email!
+  - [ ] Auto-VML - i.e. no components, all done behind the scenes.
+    - Ref: https://maizzle.com/docs/components/vml
+  - [ ] Can I use [`postcss-preset-env`](https://www.npmjs.com/package/postcss-preset-env) for emails?
+  - [ ] Images get clipped by Gmail at 102kb. We should warn ourselves!
+  - [ ] Report astro bug: having a JSX comment i.e. `{/* @ts-expect-error sdjf */}` ahead of `<html>` causes the `<html>`, `<head>`, and `<body>` tags to be removed during build.
 - Maybe:
   - [ ] Base URL (for images, etc.). See https://maizzle.com/docs/transformers/base-url
   - [ ] URL parameters (for tracking, etc.). See https://maizzle.com/docs/transformers/url-parameters
   - [ ] Widow words could be useful. See https://maizzle.com/docs/transformers/widows
   - [ ] Batch replace strings in files? See https://maizzle.com/docs/transformers/replace-strings
-- [x] Astro integration + Vite plugin combo
-- [x] Remove unused CSS (for minification). See https://maizzle.com/docs/transformers/remove-unused-css
-- [x] HTML minify - Astro does some for us so... needed? I'm putting it in anyway.
-- [x] Create "Safe class names" (ex. replacing `:`)
-  - Refs: https://maizzle.com/docs/transformers/safe-class-names
+- Done:
+  - [x] Astro integration + Vite plugin combo
+  - [x] Remove unused CSS (for minification). See https://maizzle.com/docs/transformers/remove-unused-css
+  - [x] HTML minify - Astro does some for us so... needed? I'm putting it in anyway.
+  - [x] Create "Safe class names" (ex. replacing `:`)
+    - Refs: https://maizzle.com/docs/transformers/safe-class-names
 
 ## Resources
 
