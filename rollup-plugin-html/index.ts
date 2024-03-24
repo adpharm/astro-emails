@@ -1,98 +1,120 @@
-import { build } from "astro";
+import { build as astroBuild } from "astro";
 import { transformHTML } from "../posthtml-transformers/index.ts";
-import { $, echo, within } from "zx";
-import type { HmrContext, PluginOption, ViteDevServer } from "vite";
+import { $, within } from "zx";
+import { type HmrContext, type PluginOption, type ViteDevServer, normalizePath } from "vite";
 import path from "path";
 import serveStatic from "serve-static";
 import { fileURLToPath } from "url";
+import colors from "picocolors";
+import { glob } from "glob";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const distDir = path.resolve(__dirname, "../dist");
-// import postcss from "postcss";
 
-export function emailhtml(): PluginOption {
+interface MyPluginProps {
+  /**
+   * Paths to watch for changes.
+   * @default config.build.outDir
+   */
+  input: string | string[];
+  /**
+   * Files will be resolved against this path.
+   * @default process.cwd()
+   */
+  root?: string;
+}
+
+export function emailhtml(props?: MyPluginProps): PluginOption {
+  let servingOrBuilding: "serving" | "building" = "serving";
+
   return {
     name: "email-html",
+    enforce: "post",
 
-    // options(options: any) {
-    //   options.plugins = options.plugins?.filter((p: any) => p.name !== "vite:build-html");
-    // },
+    /**
+     * Apply
+     *
+     * @param config
+     * @param env
+     * @returns
+     */
+    apply(config, env) {
+      // NOTE: we have to do it this way because env.command is "serve" at some point when JUST building...
+      if (env.command === "build") {
+        servingOrBuilding = "building";
+      }
 
-    // configResolved(resolvedConfig: any) {
-    //   // store the resolved config
-    //   config = resolvedConfig;
-    // },
+      // apply this plugin on both serve and build
+      return true;
+    },
 
-    // async renderStart(options, inputOptions) {
-    //   console.log(options);
-    //   // console.log(inputOptions);
-    //   return;
-    // },
+    /**
+     * Config
+     *
+     * "disableGlobbing" idea from: https://github.com/ElMassimo/vite-plugin-full-reload/blob/main/src/index.ts
+     * TODO: do we need this?
+     *
+     * @returns
+     */
+    config: () => ({ server: { watch: { disableGlobbing: false } } }),
 
-    // async writeBundle(options, bundle) {
-    //   // console.log(options);
-    //   console.log(bundle);
+    /**
+     * Configure Server
+     *
+     * @param {ViteDevServer} param0
+     */
+    async configureServer({ middlewares, config }: ViteDevServer) {
+      // console.log("configureServer");
+      // console.log("config.mode", config.mode);
+      // servingOrBuilding = "serving";
 
-    //   return;
-    // },
+      const { input = `${config.build.outDir}/**/*.html`, root = config.root } = props || {};
+      const paths = normalizePaths(root, input);
 
-    // enforce: "post",
-    // apply: "build",
-
-    // async transform(src: string, id: string) {
-    //   // throw new Error("Not implemented");
-    //   // if (!id.endsWith(".html")) return;
-    //   // console.log("Transforming HTML for email...");
-    //   // if (id === "/Users/benhonda/Documents/adpharm/astro-emails/src/pages/index.astro") {
-    //   //   console.log("Transforming Div.astro");
-    //   //   console.log(src);
-    //   // }
-    //   console.log(id);
-    //   return;
-    // },
-
-    // async transformIndexHtml(html: any) {
-    //   console.log(html);
-
-    //   return html;
-    // },
-
-    // configurePreviewServer(server) {
-    //   // return a post hook that is called after other middlewares are
-    //   // installed
-    //   return () => {
-    //     server.middlewares.use((req, res, next) => {
-    //       // custom handle request...
-    //       console.log("running..");
-    //     });
-    //   };
-    // },
-
-    // enforce: "pre",
-    apply: "serve",
-
-    // config: () => ({ server: { watch: { usePolling: true } } }),
-
-    configureServer({ middlewares, watcher }: ViteDevServer) {
       /**
        * Redirect requests to .html
        */
       middlewares.use(async (req, res, next) => {
-        if (!req.url?.endsWith(".html")) {
-          if (req.url === "/") {
-            req.url = "/index.html";
-          }
-          // TODO: only match our paths!
-          // TODO: build - just build! see https://vitejs.dev/guide/api-plugin.html#conditional-application 
-          // else {
-          //   // redirect to .html
-          //   req.url += ".html";
-          // }
+        // if no url, skip
+        if (!req.url) return next();
+        // if url ends with .html already, skip
+        if (req.url?.endsWith(".html")) return next();
+
+        // get file paths relative to config.build.outDir and remove .html extension
+        const files = (await glob(paths)).map((_path) =>
+          path.relative(config.build.outDir, _path).replace(/\.html$/, "")
+        );
+
+        const reqUrlFilename = path.basename(req.url);
+
+        /**
+         * Check if the request is for an input file
+         */
+        const isAnInputFileRequest = files.some((file) => reqUrlFilename === file);
+
+        /**
+         *
+         */
+        if (req.url === "/") {
+          req.url = "/index.html";
+          return next();
         }
 
-        next();
+        if (isAnInputFileRequest) {
+          config.logger.info(
+            `${colors.green("[email matching]")} ${colors.dim(`${req.url} -> ${req.url}${".html"}`)}`,
+            {
+              clear: true,
+              timestamp: true,
+            }
+          );
+
+          req.url += ".html";
+        }
+
+        return next();
       });
 
       /**
@@ -101,90 +123,64 @@ export function emailhtml(): PluginOption {
       middlewares.use(serveStatic(distDir));
     },
 
-    // async watchChange(id: string, change: { event: "create" | "update" | "delete" }) {
-    //   // console.log("File changed: ", id);
-    //   // trigger build
-    //   console.time("Building astro");
-    //   await build({ mode: "production", logLevel: "error" });
-    //   console.timeEnd("Building astro");
-
-    //   // for each file in input, run postcss
-    //   // TODO: use postcss directly?
-    //   console.time("PostCSS");
-    //   await within(async () => {
-    //     $.verbose = false;
-    //     const workingDir = (await $`pwd`).stdout.trim();
-    //     await $`postcss ${workingDir}/src/assets/_styles.css -o ${workingDir}/src/assets/_styles-dist.css`;
-    //   });
-    //   console.timeEnd("PostCSS");
-
-    //   // transform HTML in dist/
-    //   console.time("Transform HTML");
-    //   await transformHTML();
-    //   console.timeEnd("Transform HTML");
-    // },
-
-    async handleHotUpdate({ server, modules, timestamp, file }: HmrContext) {
-      // console.log("File changed: ", file);
-      // trigger build
-      console.time("Building astro");
-      await build({ mode: "production", logLevel: "error" });
-      console.timeEnd("Building astro");
-
-      // for each file in input, run postcss
-      // TODO: use postcss directly?
-      console.time("PostCSS");
-      await within(async () => {
-        $.verbose = false;
-        const workingDir = (await $`pwd`).stdout.trim();
-        await $`postcss ${workingDir}/src/assets/_styles.css -o ${workingDir}/src/assets/_styles-dist.css`;
-      });
-      console.timeEnd("PostCSS");
-
-      // transform HTML in dist/
-      console.time("Transform HTML");
-      await transformHTML();
-      console.timeEnd("Transform HTML");
-
-      // server.hot.send({ type: "full-reload" });
-      server.hot.send({ type: "full-reload", path: "*" });
-      // server.restart()
-
-      // return [];
+    /**
+     * Handle Hot Update
+     *
+     * @param {HmrContext} param0
+     */
+    async handleHotUpdate({ server }: HmrContext) {
+      await build(servingOrBuilding);
+      // TODO: configure path?
+      server.hot.send({ type: "full-reload" });
+      // server.hot.send({ type: "full-reload", path: "*" });
     },
 
-    // load(id, options) {
-    //   console.log("Loading...");
-    //   console.log(id);
-    //   return;
-    // },
+    /**
+     * Build End
+     *
+     * @param error
+     */
+    async writeBundle() {
+      // finish the build process, if no error
+      // if (error) throw error;
 
-    // async transform(code, id, options) {
-    //   // inject code to refresh the page when "full-reload" message is received
-    //   console.log(id);
-    //   if (id.endsWith(".html")) {
-    //     console.log(id);
-    //     console.log(code);
-    //     // return code.replace(
-    //     //   "</body>",
-    //     //   `<script>
-    //     //     const socket = new WebSocket("ws://localhost:3000");
-    //     //     socket.onmessage = (event) => {
-    //     //       if (event.data === "full-reload") {
-    //     //         window.location.reload();
-    //     //       }
-    //     //     };
-    //     //   </script>
-    //     //   </body>`
-    //     // );
-    //   }
-    // },
+      // sleep for a bit
+      // await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    // async moduleParsed({ id }) {
-    //   console.log("Module parsed");
-    //   console.log(id);
+      // build fn
+      // await build(servingOrBuilding);
 
-    //   return
-    // },
+      console.log(colors.green("Email HTML build complete!"));
+    },
   };
+}
+
+async function build(servingOrBuilding: "serving" | "building") {
+  if (servingOrBuilding === "serving") {
+    // trigger build
+    console.time("Building astro");
+    await astroBuild({ mode: "production", logLevel: "error" });
+    console.timeEnd("Building astro");
+  }
+
+  // for each file in input, run postcss
+  // TODO: use postcss directly?
+  console.time("PostCSS");
+  await within(async () => {
+    $.verbose = false;
+    const workingDir = (await $`pwd`).stdout.trim();
+    await $`postcss ${workingDir}/src/assets/_styles.css -o ${workingDir}/src/assets/_styles-dist.css`;
+  });
+  console.timeEnd("PostCSS");
+
+  // transform HTML in dist/
+  console.time("Transform HTML");
+  await transformHTML();
+  console.timeEnd("Transform HTML");
+
+  return;
+}
+
+function normalizePaths(root: string, _path: string | string[]): string[] {
+  return (Array.isArray(_path) ? _path : [_path]).map((__path) => path.resolve(root, __path)).map(normalizePath);
 }

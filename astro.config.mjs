@@ -3,10 +3,11 @@ import { defineConfig } from "astro/config";
 import { emailhtml } from "./rollup-plugin-html/index";
 import fullReload from "vite-plugin-full-reload";
 import Inspect from "vite-plugin-inspect";
+import astroEmails from "./integrations/astro-emails";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [],
+  integrations: [astroEmails()],
   output: "static",
   outDir: "dist",
   // publicDir: "dist",
@@ -26,7 +27,7 @@ export default defineConfig({
     //   },
     // ],
     // plugins: [emailhtml(), fullReload("src/**/*.astro")],
-    plugins: [emailhtml()],
+    // plugins: [emailhtml()],
     // build: {
     //   rollupOptions: {
     //     plugins
