@@ -4,9 +4,7 @@ Using Astro to build emails.
 
 ## TODO:
 
-- [ ] Do this all in a Vite plugin????
 - [ ] How can we build just the file that changed? We currently build the entire `pages/` directory.
-- [ ] Prevent building twice by separating chokidar from `ready` and `change` events.
 - [ ] Auto-VML - i.e. no components, all done behind the scenes.
   - Ref: https://maizzle.com/docs/components/vml
 - [ ] Can I use [`postcss-preset-env`](https://www.npmjs.com/package/postcss-preset-env) for emails?
@@ -17,6 +15,7 @@ Using Astro to build emails.
   - [ ] URL parameters (for tracking, etc.). See https://maizzle.com/docs/transformers/url-parameters
   - [ ] Widow words could be useful. See https://maizzle.com/docs/transformers/widows
   - [ ] Batch replace strings in files? See https://maizzle.com/docs/transformers/replace-strings
+- [x] Astro integration + Vite plugin combo
 - [x] Remove unused CSS (for minification). See https://maizzle.com/docs/transformers/remove-unused-css
 - [x] HTML minify - Astro does some for us so... needed? I'm putting it in anyway.
 - [x] Create "Safe class names" (ex. replacing `:`)

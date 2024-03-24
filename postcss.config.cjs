@@ -7,7 +7,7 @@ module.exports = {
     require("tailwindcss/nesting"),
     require("tailwindcss"),
     require("autoprefixer"),
-    require("./postcss-plugins/importantTailwindVariants.cjs"),
+    require("./integrations/astro-emails/postcss/plugins/importantTailwindVariants.cjs"),
     // require("cssnano"), // we don't need this because we minify the html file
   ],
 };

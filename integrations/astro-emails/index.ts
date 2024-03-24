@@ -7,7 +7,7 @@ import { glob } from "glob";
 import { $, within } from "zx";
 import { emailifyHtml, injectHMRInHtml } from "./html-transformers";
 
-interface PluginOptions {
+interface AstroEmailsIntegrationOptions {
   /**
    * Paths to watch for changes.
    * @default config.build.outDir
@@ -20,7 +20,7 @@ interface PluginOptions {
   root?: string;
 }
 
-export default function createPlugin(options?: PluginOptions): AstroIntegration {
+export default function createAstroEmailsIntegration(options?: AstroEmailsIntegrationOptions): AstroIntegration {
   return {
     name: "email",
     hooks: {
@@ -33,7 +33,7 @@ export default function createPlugin(options?: PluginOptions): AstroIntegration 
 
         updateConfig({
           vite: {
-            plugins: [astroEmailsHMR()],
+            plugins: [vitePluginAstroEmailsHMR()],
           },
         });
       },
@@ -100,12 +100,20 @@ export default function createPlugin(options?: PluginOptions): AstroIntegration 
 
         logger.info("Transforming HTML...");
         await emailifyHtml(dir.pathname);
+
+        // TODO: check sizes of each file
+        // if we're over 102kb (gmail clipping max), warn us!
       },
     },
   };
 }
 
-function astroEmailsHMR(): PluginOption {
+/**
+ * Vite Plugin for Astro Emails HMR
+ *
+ * @returns
+ */
+function vitePluginAstroEmailsHMR(): PluginOption {
   return {
     name: "astro-emails-hmr",
     // only apply to serve command
@@ -123,7 +131,8 @@ function astroEmailsHMR(): PluginOption {
     async configureServer({ config }) {
       config.logger.info("📧 Initializing Astro Emails 📧");
 
-      await buildAstro({ mode: "production", logLevel: "error" });
+      await buildAstro({});
+      await injectHMRInHtml(config.build.outDir);
     },
 
     /**
@@ -135,39 +144,13 @@ function astroEmailsHMR(): PluginOption {
       // TODO: throttle?
       await buildAstro({});
       await injectHMRInHtml(server.config.build.outDir);
+
       // TODO: configure path?
       server.hot.send({ type: "full-reload" });
       // server.hot.send({ type: "full-reload", path: "*" });
     },
   };
 }
-
-// async function build() {
-//   // async function build(servingOrBuilding: "serving" | "building") {
-//   // if (servingOrBuilding === "serving") {
-//   //   // trigger build
-//   //   console.time("Building astro");
-//   //   await astroBuild({ mode: "production", logLevel: "error" });
-//   //   console.timeEnd("Building astro");
-//   // }
-
-//   // for each file in input, run postcss
-//   // TODO: use postcss directly?
-//   console.time("PostCSS");
-//   await within(async () => {
-//     $.verbose = false;
-//     const workingDir = (await $`pwd`).stdout.trim();
-//     await $`postcss ${workingDir}/src/assets/_styles.css -o ${workingDir}/src/assets/_styles-dist.css`;
-//   });
-//   console.timeEnd("PostCSS");
-
-//   // transform HTML in dist/
-//   console.time("Transform HTML");
-//   await transformHTML();
-//   console.timeEnd("Transform HTML");
-
-//   return;
-// }
 
 /**
  * Normalize paths

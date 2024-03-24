@@ -1,8 +1,4 @@
 import { defineConfig } from "astro/config";
-// import tailwind from "@astrojs/tailwind";
-import { emailhtml } from "./rollup-plugin-html/index";
-import fullReload from "vite-plugin-full-reload";
-import Inspect from "vite-plugin-inspect";
 import astroEmails from "./integrations/astro-emails";
 
 // https://astro.build/config
@@ -10,8 +6,6 @@ export default defineConfig({
   integrations: [astroEmails()],
   output: "static",
   outDir: "dist",
-  // publicDir: "dist",
-  // outDir: "_site",
   build: {
     format: "file",
     assets: "_assets",
@@ -19,57 +13,10 @@ export default defineConfig({
     // assetsPrefix: "" // e.g. https://cdn.example.com
   },
   vite: {
-    // plugins: [Inspect()],
-    // plugins: [
-    //   {
-    //     ...emailhtml(),
-    //     enforce: "post",
-    //   },
-    // ],
-    // plugins: [emailhtml(), fullReload("src/**/*.astro")],
-    // plugins: [emailhtml()],
-    // build: {
-    //   rollupOptions: {
-    //     plugins
-    //   }
-    // }
     clearScreen: false,
-
-    // build: {
-    //   watch: {
-    //     // include: ["dist/**/*.html"],
-    //     // clearScreen: false,
-    //   },
-    // },
-
-    // build: {
-    //   rollupOptions: {
-    //     input: {
-    //       template: "./dist/index.html",
-    //     },
-    //   },
-    // },
   },
-  // vite: {
-  //   server: {
-  //     watch: {
-
-  //     }
-  //   },
-  //   build: {
-  //     rollupOptions: {}
-  //   }
-  // },
-  // cacheDir: "./posthtml-transformers/.astro",
   compressHTML: false,
   devToolbar: {
     enabled: false,
   },
-  // i18n: {
-  //   defaultLocale: "en",
-  //   locales: ["en", "fr"],
-  //   routing: {
-  //     prefixDefaultLocale: false,
-  //   },
-  // },
 });
