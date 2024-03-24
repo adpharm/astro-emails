@@ -13,7 +13,6 @@ const { subject, lang = "en", previewText } = Astro.props;
 ---
 
 <!doctype html>
-{/* @ts-expect-error sdjf */}
 <html lang={lang} xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml">
   <head>
     <meta charset="utf-8" />
@@ -56,12 +55,3 @@ const { subject, lang = "en", previewText } = Astro.props;
     </div>
   </body>
 </html>
-
-{
-  import.meta.env.DEV && (
-    <>
-      {/* dev only! (we'll mimick this behaviour in prod in JS) */}
-      <style is:global />
-    </>
-  )
-}

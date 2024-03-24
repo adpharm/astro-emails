@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.17.0",
+    "@types/serve-static": "^1.15.5",
     "autoprefixer": "^10.4.19",
     "chokidar": "^3.6.0",
     "color-shorthand-hex-to-six-digit": "^5.0.16",
@@ -48,9 +49,12 @@
     "posthtml-mso": "^3.0.0",
     "posthtml-postcss-merge-longhand": "^3.0.0",
     "prettier": "^3.2.5",
+    "serve-static": "^2.0.0-beta.2",
     "string-remove-widows": "^4.0.20",
     "tailwind-merge": "^2.2.1",
     "ts-node": "^10.9.2",
+    "vite": "^5.2.4",
+    "vite-plugin-full-reload": "^1.1.0",
     "vite-plugin-inspect": "^0.8.3",
     "zx": "^7.2.3"
   }

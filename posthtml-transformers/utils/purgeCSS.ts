@@ -32,7 +32,7 @@ export async function purgeCSS(htmlfile: string) {
     "#*", // Freenet uses #msgBody
     ".lang*", // Fenced code blocks
     // leave @media queries alone matcher
-    "@media*",
+    // "@media*",
   ];
 
   const { html: htmlWithoutInlinedSelectors, globalSafelist } = await purgeInlineClasses(htmlfile, safelist);

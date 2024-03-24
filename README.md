@@ -11,6 +11,7 @@ Using Astro to build emails.
   - Ref: https://maizzle.com/docs/components/vml
 - [ ] Can I use [`postcss-preset-env`](https://www.npmjs.com/package/postcss-preset-env) for emails?
 - [ ] Images get clipped by Gmail at 102kb. We should warn ourselves!
+- [ ] Report astro bug: having a JSX comment i.e. `{/* @ts-expect-error sdjf */}` ahead of `<html>` causes the `<html>`, `<head>`, and `<body>` tags to be removed during build.
 - Maybe:
   - [ ] Base URL (for images, etc.). See https://maizzle.com/docs/transformers/base-url
   - [ ] URL parameters (for tracking, etc.). See https://maizzle.com/docs/transformers/url-parameters

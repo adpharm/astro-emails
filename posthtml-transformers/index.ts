@@ -10,6 +10,8 @@ import { parseOutlookTags } from "./utils/parseOutlookTags.ts";
 import { minifyHTML } from "./utils/minifyHTML.ts";
 import { purgeEmptyHTMLAttributes } from "./utils/purgeEmptyHTMLAttributes.ts";
 import { purgeCSS } from "./utils/purgeCSS.ts";
+import * as path from "path";
+import { injectHMRScript } from "./utils/injectHMRScript.ts";
 
 /**
  * Our custom build
@@ -18,7 +20,8 @@ export async function transformHTML() {
   /**
    * Get all html files
    */
-  const globPath = process.argv[2] || "dist/**/*.html";
+  const globPath = path.resolve(process.cwd(), "dist/**/*.html");
+
   // glob
   const files = await glob(globPath);
 
@@ -37,6 +40,7 @@ export async function transformHTML() {
     html = await purgeEmptyHTMLAttributes(html);
     html = await makeSixHex(html);
     html = await parseOutlookTags(html);
+    html = await injectHMRScript(html);
     html = await minifyHTML(html);
 
     /**

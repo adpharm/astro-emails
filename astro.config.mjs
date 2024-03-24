@@ -1,12 +1,15 @@
 import { defineConfig } from "astro/config";
 // import tailwind from "@astrojs/tailwind";
 import { emailhtml } from "./rollup-plugin-html/index";
+import fullReload from "vite-plugin-full-reload";
 import Inspect from "vite-plugin-inspect";
 
 // https://astro.build/config
 export default defineConfig({
   integrations: [],
   output: "static",
+  outDir: "dist",
+  // publicDir: "dist",
   // outDir: "_site",
   build: {
     format: "file",
@@ -22,6 +25,7 @@ export default defineConfig({
     //     enforce: "post",
     //   },
     // ],
+    // plugins: [emailhtml(), fullReload("src/**/*.astro")],
     plugins: [emailhtml()],
     // build: {
     //   rollupOptions: {
@@ -29,6 +33,7 @@ export default defineConfig({
     //   }
     // }
     clearScreen: false,
+
     // build: {
     //   watch: {
     //     // include: ["dist/**/*.html"],
