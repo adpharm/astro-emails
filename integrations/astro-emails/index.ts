@@ -4,8 +4,10 @@ import colors from "picocolors";
 import serveStatic from "serve-static";
 import { normalizePath, type HmrContext, type PluginOption } from "vite";
 import { glob } from "glob";
-import { $, within } from "zx";
+import { $, fs, within } from "zx";
 import { emailifyHtml, injectHMRInHtml } from "./html-transformers";
+import css from "css";
+// import { convert } from "@americanexpress/css-to-js";
 
 interface AstroEmailsIntegrationOptions {
   /**
@@ -22,7 +24,7 @@ interface AstroEmailsIntegrationOptions {
 
 export default function createAstroEmailsIntegration(options?: AstroEmailsIntegrationOptions): AstroIntegration {
   return {
-    name: "email",
+    name: "astro-emails",
     hooks: {
       "astro:config:setup": ({ updateConfig, isRestart, logger }) => {
         if (isRestart) return;
@@ -85,16 +87,121 @@ export default function createAstroEmailsIntegration(options?: AstroEmailsIntegr
         server.middlewares.use(serveStatic(server.config.build.outDir));
       },
 
-      "astro:build:done": async ({ dir, logger }) => {
-        logger.info("Transforming CSS...");
+      "astro:build:start": async ({ logger }) => {
+        const workingDir = process.cwd();
+        logger.info("Prepping build...");
+        const prepLogger = logger.fork("astro-emails/prep");
+
+        prepLogger.info("Transforming CSS...");
         await within(async () => {
           $.verbose = false;
           // const workingDir = (await $`pwd`).stdout.trim();
-          const workingDir = process.cwd();
-          await $`postcss ${workingDir}/src/assets/_styles.css -o ${workingDir}/src/assets/_styles-dist.css`;
+          await $`postcss ${workingDir}/src/assets/_styles.css -o ${workingDir}/src/assets/__styles-dist.css`;
         });
 
-        logger.info("Transforming HTML...");
+        prepLogger.info("Building CSS objects...");
+        // convert(`${workingDir}/src/assets/__styles-dist.css`, {
+        //   outputType: "file",
+        //   outputPath: `${workingDir}/src/assets/__styles-dist.js`,
+        // });
+
+        const cssContent = await fs.readFile(`${workingDir}/src/assets/__styles-dist.css`, "utf-8");
+
+        // Parse CSS into AST (Abstract Syntax Tree)
+        const ast: css.Stylesheet = css.parse(cssContent);
+
+        // Convert AST into JavaScript object
+        const cssObject: CSSObject = {};
+
+        ast.stylesheet?.rules.forEach((rule) => {
+          if (rule.type === "comment") return;
+
+          if (rule.type === "rule") {
+            const cssRule = rule as css.Rule;
+            const selectors: string[] = cssRule.selectors || [];
+            const declarations: StyleObject = {};
+
+            cssRule.declarations?.forEach((declaration) => {
+              if (declaration.type === "comment") return;
+
+              const cssDeclaration = declaration as css.Declaration;
+
+              if (!cssDeclaration.value || !cssDeclaration.property) return;
+
+              declarations[cssDeclaration.property] = cssDeclaration.value;
+            });
+
+            selectors.forEach((selector) => {
+              // strip all backslashes
+              selector = selector.replace(/\\/g, "");
+              cssObject[selector] = declarations;
+            });
+          } else if (rule.type === "media") {
+            const atRule = rule as css.Media;
+            const mediaQuery: MediaQuery = {};
+            const mediaQueryKey = `@media ${atRule.media}`;
+
+            atRule.rules?.forEach((subRule) => {
+              if (subRule.type === "rule") {
+                const cssSubRule = subRule as css.Rule;
+
+                const selectors: string[] = cssSubRule.selectors || [];
+                const declarations: StyleObject = {};
+
+                cssSubRule.declarations?.forEach((declaration) => {
+                  const cssDeclaration = declaration as css.Declaration;
+                  if (!cssDeclaration.value || !cssDeclaration.property) return;
+
+                  declarations[cssDeclaration.property] = cssDeclaration.value;
+                });
+
+                selectors.forEach((selector) => {
+                  // strip all backslashes
+                  selector = selector.replace(/\\/g, "");
+                  mediaQuery[selector] = declarations;
+                });
+              }
+            });
+
+            cssObject[mediaQueryKey] = mediaQuery;
+          }
+        });
+
+        // Parse CSS into AST (Abstract Syntax Tree)
+        // const ast = css.parse(cssContent);
+
+        // Convert AST into JavaScript object
+        // const cssObject: Record<string, Record<string, any>> = {};
+
+        // ast.stylesheet?.rules.forEach((rule: css.Rule) => {
+        //   if (rule.type === "rule") {
+        //     const selectors = rule.selectors;
+        //     const declarations: Record<string, any> = {};
+
+        //     rule.declarations?.forEach((declaration) => {
+        //       if ("value" in declaration && declaration.property) {
+        //         declarations[declaration.property] = declaration.value;
+        //       }
+        //     });
+
+        //     selectors?.forEach((selector) => {
+        //       cssObject[selector] = declarations;
+        //     });
+        //   }
+        // });
+
+        // Write to file
+        await fs.writeFile(
+          `${workingDir}/src/assets/__styles-dist.ts`,
+          `export const distStyles = ${JSON.stringify(cssObject, null, 2)}`
+        );
+
+        prepLogger.info("Done build prep.");
+      },
+
+      "astro:build:done": async ({ dir, logger }) => {
+        const buildLogger = logger.fork("astro-emails/build");
+        buildLogger.info("Transforming HTML...");
         await emailifyHtml(dir.pathname);
 
         // TODO: check sizes of each file
@@ -136,7 +243,11 @@ function vitePluginAstroEmailsHMR(): PluginOption {
      *
      * @param {HmrContext} param0
      */
-    async handleHotUpdate({ server }: HmrContext) {
+    async handleHotUpdate({ server, file }: HmrContext) {
+      if (file.includes("__")) {
+        return;
+      }
+
       // TODO: throttle?
       await buildAstro({});
       await injectHMRInHtml(server.config.build.outDir);
@@ -157,4 +268,16 @@ function vitePluginAstroEmailsHMR(): PluginOption {
  */
 function normalizePaths(root: string, _path: string | string[]): string[] {
   return (Array.isArray(_path) ? _path : [_path]).map((__path) => path.resolve(root, __path)).map(normalizePath);
+}
+
+interface StyleObject {
+  [property: string]: string;
+}
+
+interface MediaQuery {
+  [mediaQuery: string]: StyleObject;
+}
+
+interface CSSObject {
+  [selector: string]: StyleObject | MediaQuery;
 }

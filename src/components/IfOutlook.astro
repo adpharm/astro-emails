@@ -1,14 +1,19 @@
 ---
-import { type OutlookTagProps } from "@/utils/types";
+import { outlookVersionsMap, type OutlookTagProps } from "@/utils/types";
 
 interface Props extends OutlookTagProps {}
 
-const { onlyVersions, onlyVersionsGreaterThanOrEqualTo, onlyVersionsLessThanOrEqualTo, notVersions } = Astro.props;
+const { onlyVersion, onlyVersionsGreaterThanOrEqualTo, onlyVersionsLessThanOrEqualTo, notVersion } = Astro.props;
+
 const outlookTagProps = {
-  only: onlyVersions,
-  gte: onlyVersionsGreaterThanOrEqualTo,
-  lte: onlyVersionsLessThanOrEqualTo,
-  not: notVersions,
+  only: onlyVersion ? outlookVersionsMap[onlyVersion as keyof typeof outlookVersionsMap] : onlyVersion,
+  gte: onlyVersionsGreaterThanOrEqualTo
+    ? outlookVersionsMap[onlyVersionsGreaterThanOrEqualTo as keyof typeof outlookVersionsMap]
+    : onlyVersionsGreaterThanOrEqualTo,
+  lte: onlyVersionsLessThanOrEqualTo
+    ? outlookVersionsMap[onlyVersionsLessThanOrEqualTo as keyof typeof outlookVersionsMap]
+    : onlyVersionsLessThanOrEqualTo,
+  not: notVersion ? outlookVersionsMap[notVersion as keyof typeof outlookVersionsMap] : notVersion,
 };
 ---
 

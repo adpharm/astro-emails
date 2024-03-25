@@ -1,6 +1,6 @@
 ---
 import type { ComponentProps } from "@/utils/types";
-import rawStylesCSS from "../assets/_styles-dist.css?raw";
+import rawStylesCSS from "../assets/__styles-dist.css?raw";
 import Div from "@/components/Div.astro";
 import IfOutlook from "@/components/IfOutlook.astro";
 
@@ -54,7 +54,7 @@ const htmlAtts = {
     </div>
 
     <div role="article" aria-roledescription="email" aria-label={subject} lang={lang}>
-      <Div id="_root" class="w-full lg:w-[700px]">
+      <Div id="_root" class="w-[700px] max-w-full">
         <slot />
       </Div>
     </div>

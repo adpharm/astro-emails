@@ -16,8 +16,16 @@ export const tailwindStrictConfig = {
   theme: {
     screens: {
       // NOTE: ordering matters here!!
-      sm: { min: "0px" },
-      lg: { min: "426px" },
+      // sm: { min: "0px" },
+      // lg: { min: "426px" },
+
+      // NOTE: this is what maizzle does (desktop-first)
+      // lg: { max: "700px" },
+      // sm: { max: "425px" },
+
+      // NOTE: this is what tailwind does (mobile-first)
+      sm: { max: "700px" },
+      lg: { min: "701px" },
     },
     spacing: {
       screen: "100vw",
@@ -63,17 +71,17 @@ export const tailwindStrictConfig = {
       80: "320px",
       96: "384px",
     },
-    // borderRadius: {
-    //   none: "0px",
-    //   sm: "2px",
-    //   DEFAULT: "4px",
-    //   md: "6px",
-    //   lg: "8px",
-    //   xl: "12px",
-    //   "2xl": "16px",
-    //   "3xl": "24px",
-    //   full: "9999px",
-    // },
+    borderRadius: {
+      none: "0px",
+      sm: "2px",
+      DEFAULT: "4px",
+      md: "6px",
+      lg: "8px",
+      xl: "12px",
+      "2xl": "16px",
+      "3xl": "24px",
+      full: "999px",
+    },
     fontFamily: {
       // sensible defaults
       serif: ["Georgia", "Times New Roman", "Lucida Bright", ...defaultTheme.fontFamily.serif],
@@ -312,6 +320,11 @@ export const tailwindStrictConfig = {
           fontWeight: "400",
           webkitFontSmoothing: "antialiased",
           wordBreak: "break-word",
+          webkitTextSizeAdjust: "100%",
+          msTextSizeAdjust: "100%",
+          webkitBoxSizing: "border-box",
+          mozBoxSizing: "border-box",
+          boxSizing: "border-box",
         },
         // Default text styles
         h1: { fontSize: theme("fontSize.2xl") },

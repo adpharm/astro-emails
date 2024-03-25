@@ -13,10 +13,14 @@ const { lang } = Astro.props;
 ---
 
 <Layout lang={lang} subject="Welcome to Astro, Ben." previewText="">
+  <Link href="#" class="bg-violet-500 text-center no-underline text-white w-full py-2">
+    Email not loading correctly? Click here to view in your browser
+  </Link>
+
   <Div>
     <Row>
       <Col class="bg-gray-100 border-t-4-yellow-500 border-l-4-yellow-500 sm:bg-red-100 lg:bg-blue-200">Hello</Col>
-      <Col class="bg-gray-200 w-[500px]">
+      <Col class="bg-gray-200 lg:w-[500px]">
         <h1>Welcome to Astro</h1>
         <p>This is a simple Astro starter template. It includes a few common features to help you get started.</p>
         <p>For example, here is a grid system.</p>
@@ -30,7 +34,12 @@ const { lang } = Astro.props;
     <Spacer px="100" />
     <p>I'm in between spacers</p>
     <p>I may be beside you!</p>
-    <Link href="#" class="text-white py-2 px-4 rounded-full bg-green-500 bg-[url('https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg')]">I'm a link, from the link component</Link>
+    <Link
+      href="#"
+      class="text-white py-2 pb-8 px-4 rounded-full bg-green-500 bg-[url('https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg')]"
+    >
+      I'm a link, from the link component
+    </Link>
     <Spacer px="100" />
 
     <Row class="py-20 bg-gray-200">

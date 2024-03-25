@@ -12,6 +12,8 @@ import IfOutlook from "./IfOutlook.astro";
 import IfNotOutlook from "./IfNotOutlook.astro";
 import tailwindConfig from "tailwind.config";
 import resolveConfig from "tailwindcss/resolveConfig";
+import { type StandardPropertiesHyphen } from "csstype";
+import { distStyles } from "@/assets/__styles-dist";
 
 const tailwindConfigResolved = resolveConfig(tailwindConfig);
 
@@ -31,11 +33,12 @@ const bgImage = extractFromClassList(classList, "bg-url");
 const bgImageUrl = bgImage.replace(/^bg-\[url\(['"](.*)['"]\)\]/, "$1");
 const bgColor = extractFromClassList(classList, "bg-color", "#ffffff");
 const borderColor = extractFromClassList(classList, "border-color", "#ffffff");
-const padding = extractFromClassList(classList, "padding");
-const paddingValues = extractValueFromPaddingClass(padding);
+// const padding = extractFromClassList(classList, "padding");
+// const paddingValues = extractValueFromPaddingClass(padding);
 const fontSize = extractFromClassList(classList, "font-size", tailwindConfigResolved.theme.fontSize.base || "16px");
 const fontSizePx = extractValueFromFontSizeClass(fontSize);
-const height = extractFromClassList(classList, "height", `${fontSizePx + paddingValues.top + paddingValues.bottom}px`);
+// const height = extractFromClassList(classList, "height", `${fontSizePx + paddingValues.top + paddingValues.bottom}px`);
+const height = extractFromClassList(classList, "height", `${fontSizePx}px`);
 const heightPx = extractValueFromHeightClass(height);
 const borderRadius = extractFromClassList(classList, "border-radius");
 const borderRadiusPx = extractValueFromBorderRadiusClass(borderRadius);
@@ -61,6 +64,58 @@ if (borderColor.length > 0) {
 if (borderRadius.length > 0) {
   vRoundRectAttrs.arcsize = (borderRadiusPx / heightPx) * 100 + "%";
 }
+
+// const str = "bg-gray-300 bg-cover bg-[#454545]";
+// findme("background-image", str); // => ""
+// findme("background-color", str); // => "bg-gray-300"
+// className
+//   .split(" ")
+//   .map((c) => c.trim())
+//   .forEach((c) => {
+//     console.log(c, distStyles[`.${c}`]);
+//   });
+
+// function cssPropertyToJsx(property: string): string {
+//   return property.replace(/(-.)/g, (match) => match[1].toUpperCase());
+// }
+
+function findTailwindClassForCssSelector(selector: keyof StandardPropertiesHyphen, classStr: string) {
+  return classStr
+    .split(" ")
+    .map((c) => c.trim())
+    .findLast((c) => {
+      const cssDeclarationObj = distStyles[`.${c}` as keyof typeof distStyles];
+      return Object.keys(cssDeclarationObj).some((key) => key === selector);
+    });
+}
+
+function findValueForCssSelector(selector: keyof StandardPropertiesHyphen, classStr: string) {
+  const twClass = findTailwindClassForCssSelector(selector, classStr);
+
+  if (!twClass) {
+    return "";
+  }
+
+  const cssDeclarationObj = distStyles[`.${twClass}` as keyof typeof distStyles];
+  for (const [key, val] of Object.entries(cssDeclarationObj)) {
+    if (key === selector) {
+      return `${val}`;
+    }
+  }
+
+  return "";
+}
+
+console.log("\n");
+const _bgImageUrl = findTailwindClassForCssSelector("background-image", className);
+const _bgImageUrlValue = findValueForCssSelector("background-image", className);
+console.log("bgImageUrl", _bgImageUrl, _bgImageUrlValue);
+const paddingTop = findTailwindClassForCssSelector("padding-top", className);
+const paddingTopValue = findValueForCssSelector("padding-top", className);
+console.log("paddingTop", paddingTop, paddingTopValue);
+const paddingBottom = findTailwindClassForCssSelector("padding-bottom", className);
+const paddingBottomValue = findValueForCssSelector("padding-bottom", className);
+console.log("paddingBottom", paddingBottom, paddingBottomValue);
 
 // rest
 const rest = [...classList, fontSize].join(" ");
@@ -94,10 +149,7 @@ const rest = [...classList, fontSize].join(" ");
 
                 {/* Not Outlook */}
                 <IfNotOutlook>
-                  <a
-                    href={href}
-                    class={twMerge("inline-block", rest, width, height, padding, bgImage, bgColor, borderRadius)}
-                  >
+                  <a href={href} class={twMerge("inline-block", rest, width, height, bgImage, bgColor, borderRadius)}>
                     <slot />
                   </a>
                 </IfNotOutlook>

@@ -31,9 +31,6 @@ export async function emailifyHtml(dir: string) {
     html = await parseOutlookTags(html);
     html = await minifyHTML(html);
 
-    // TODO:???
-    // set width of table with id="_root" such that it is max-width: 
-
     return html;
   });
 }

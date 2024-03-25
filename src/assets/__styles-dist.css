@@ -10,6 +10,11 @@ body {
   font-weight: 400;
   webkit-font-smoothing: antialiased;
   word-break: break-word;
+  webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  webkit-box-sizing: border-box;
+  moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 h1 {
   font-size: 24px;
@@ -81,23 +86,35 @@ img {
 .h-64 {
   height: 256px;
 }
+.w-1 {
+  width: 4px;
+}
 .w-1\/3 {
   width: 33.333333%;
 }
 .w-64 {
   width: 256px;
 }
-.w-\[500px\] {
-  width: 500px;
+.w-\[700px\] {
+  width: 700px;
 }
 .w-full {
   width: 100%;
 }
+.max-w-full {
+  max-width: 100%;
+}
 .rounded-full {
-  border-radius: 9999px;
+  border-radius: 999px;
 }
 .rounded-md {
-  border-radius: 0.375rem;
+  border-radius: 6px;
+}
+.bg-\[\#454545\] {
+  background-color: #454545;
+}
+.bg-blue-200 {
+  background-color: #bfdbfe;
 }
 .bg-gray-100 {
   background-color: #f3f4f6;
@@ -111,11 +128,20 @@ img {
 .bg-green-500 {
   background-color: #22c55e;
 }
+.bg-red-100 {
+  background-color: #fee2e2;
+}
+.bg-violet-500 {
+  background-color: #8b5cf6;
+}
 .bg-\[url\(\'\<url\>\'\)\] {
   background-image: url('<url>');
 }
 .bg-\[url\(\'https\:\/\/letsenhance\.io\/static\/8f5e523ee6b2479e26ecc91b9c25261e\/1015f\/MainAfter\.jpg\'\)\] {
   background-image: url('https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg');
+}
+.bg-cover {
+  background-size: cover;
 }
 .px-4 {
   padding-left: 16px;
@@ -129,11 +155,20 @@ img {
   padding-top: 80px;
   padding-bottom: 80px;
 }
+.pb-8 {
+  padding-bottom: 32px;
+}
+.text-center {
+  text-align: center;
+}
 .text-xs {
   font-size: 12px;
 }
 .text-white {
   color: #fff;
+}
+.no-underline {
+  text-decoration-line: none;
 }
 /* All of these will be inlined automagically! */
 /* one item */
@@ -250,14 +285,14 @@ img {
 .col:nth-child(12):nth-last-child(1) {
   width: 8.3333%;
 }
-@media (min-width: 0px) {
+@media (max-width: 700px) {
   .sm\:bg-red-100 {
     background-color: #fee2e2 !important;
   }
 }
-@media (min-width: 426px) {
-  .lg\:w-\[700px\] {
-    width: 700px !important;
+@media (min-width: 701px) {
+  .lg\:w-\[500px\] {
+    width: 500px !important;
   }
   .lg\:bg-blue-200 {
     background-color: #bfdbfe !important;
