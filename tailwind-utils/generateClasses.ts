@@ -1,15 +1,17 @@
 #!ts-node
 
 import type { OptionalConfig, RequiredConfig } from "tailwindcss/types/config";
-import twConfig from "../tailwind.config.mjs";
+import resolveConfig from "tailwindcss/resolveConfig.js";
 import defaultTheme from "tailwindcss/defaultTheme.js";
 import defaultColors from "tailwindcss/colors.js";
 import * as prettier from "prettier";
 import * as fs from "fs";
 import path from "path";
+import tailwindConfig from "tailwind.config.ts";
 
 // tailwind config
-const _twConfig = twConfig as Partial<RequiredConfig> & Partial<OptionalConfig>;
+// const twConfig = twConfig as Partial<RequiredConfig> & Partial<OptionalConfig>;
+const twConfig = resolveConfig(tailwindConfig);
 
 /**
  * Get all the colors from the themes
@@ -38,7 +40,7 @@ function getTwColorClasses() {
     ...defaultColors,
     // TODO: this probably won't work if we use fancy functions in the tailwind.config.js
     // e.g. colors: (theme) => ({ ... }) ... a problem for another day
-    ...(_twConfig.theme?.colors || {}),
+    ...(twConfig.theme?.colors || {}),
   };
 
   // this will be { "slate-200": "#xxxxxx", .... }
@@ -76,7 +78,7 @@ function generateBorderClasses() {
     [key: string]: string;
   } = {
     ...defaultTheme.borderWidth,
-    ...(_twConfig.theme?.borderWidth || {}),
+    ...(twConfig.theme?.borderWidth || {}),
   };
 
   /**

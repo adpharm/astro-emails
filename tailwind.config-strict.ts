@@ -1,6 +1,6 @@
 import defaultTheme from "tailwindcss/defaultTheme.js";
 import plugin from "tailwindcss/plugin.js";
-import type { RequiredConfig, OptionalConfig, CustomThemeConfig } from "tailwindcss/types/config";
+import type { RequiredConfig, OptionalConfig, CustomThemeConfig, Config } from "tailwindcss/types/config";
 // @ts-expect-error this is a JS import
 import tailwindMso from "tailwindcss-mso";
 import { borderClasses } from "./tailwind-utils/output/_generatedBorderClasses.ts";
@@ -11,7 +11,8 @@ import { borderClasses } from "./tailwind-utils/output/_generatedBorderClasses.t
  *
  * All other themes are based on this one.
  */
-export const tailwindStrictConfig: Partial<RequiredConfig> & Partial<OptionalConfig> = {
+export const tailwindStrictConfig = {
+  content: [],
   theme: {
     screens: {
       // NOTE: ordering matters here!!
@@ -62,16 +63,17 @@ export const tailwindStrictConfig: Partial<RequiredConfig> & Partial<OptionalCon
       80: "320px",
       96: "384px",
     },
-    borderRadius: {
-      none: "0px",
-      sm: "2px",
-      DEFAULT: "4px",
-      md: "6px",
-      lg: "8px",
-      xl: "12px",
-      "2xl": "16px",
-      "3xl": "24px",
-    },
+    // borderRadius: {
+    //   none: "0px",
+    //   sm: "2px",
+    //   DEFAULT: "4px",
+    //   md: "6px",
+    //   lg: "8px",
+    //   xl: "12px",
+    //   "2xl": "16px",
+    //   "3xl": "24px",
+    //   full: "9999px",
+    // },
     fontFamily: {
       // sensible defaults
       serif: ["Georgia", "Times New Roman", "Lucida Bright", ...defaultTheme.fontFamily.serif],
@@ -281,6 +283,7 @@ export const tailwindStrictConfig: Partial<RequiredConfig> & Partial<OptionalCon
     // "borderStyle",
     // "borderSpacing",
     // // "borderOpacity",
+    "borderRadius",
     "clear",
     "textWrap",
     "wordBreak",
@@ -375,4 +378,4 @@ export const tailwindStrictConfig: Partial<RequiredConfig> & Partial<OptionalCon
       addVariant("ox", '&[class^="ox-"]');
     }),
   ],
-};
+} satisfies Config;
