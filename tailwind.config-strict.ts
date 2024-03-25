@@ -3,7 +3,7 @@ import plugin from "tailwindcss/plugin.js";
 import type { RequiredConfig, OptionalConfig, CustomThemeConfig } from "tailwindcss/types/config";
 // @ts-expect-error this is a JS import
 import tailwindMso from "tailwindcss-mso";
-import { borderClasses } from "./tailwind-utils/_generatedBorderClasses.ts";
+import { borderClasses } from "./tailwind-utils/output/_generatedBorderClasses.ts";
 
 /**
  * This is the strict theme, which will give you the most

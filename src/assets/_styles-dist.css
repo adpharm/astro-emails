@@ -99,6 +99,15 @@ img {
 .bg-gray-300 {
   background-color: #d1d5db;
 }
+.bg-green-500 {
+  background-color: #22c55e;
+}
+.bg-\[url\(\'\<url\>\'\)\] {
+  background-image: url('<url>');
+}
+.bg-\[url\(\'https\:\/\/letsenhance\.io\/static\/8f5e523ee6b2479e26ecc91b9c25261e\/1015f\/MainAfter\.jpg\'\)\] {
+  background-image: url('https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg');
+}
 .py-20 {
   padding-top: 80px;
   padding-bottom: 80px;

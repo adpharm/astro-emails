@@ -6,7 +6,6 @@ Using Astro to build emails.
   - [ ] **Make builds faster**
     - How can we build just the file that changed? We currently build & transform the entire `pages/` and `dist/` directory.
   - [ ] Build out Astro components
-    - [ ] Button/Clickable
     - [ ] Link
     - [ ] Text
     - [ ] Image
@@ -16,6 +15,7 @@ Using Astro to build emails.
     - [x] Div
     - [x] Row
     - [x] Col
+    - [x] ~~Button/Clickable~~ (not applicable in email)
   - [ ] Build an email!
   - [ ] Auto-VML - i.e. no components, all done behind the scenes.
     - Ref: https://maizzle.com/docs/components/vml

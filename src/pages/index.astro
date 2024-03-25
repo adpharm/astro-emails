@@ -30,11 +30,12 @@ const { lang } = Astro.props;
     <Spacer px="100" />
     <p>I'm in between spacers</p>
     <p>I may be beside you!</p>
+    <Link href="#" class="bg-green-500 bg-[url('https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg')]">I'm a link, from the link component</Link>
     <Spacer px="100" />
 
     <Row class="py-20 bg-gray-200">
-      <Col class="border border-gray-700">Column 1</Col>
-      <Col class="border border-red-500">Column 2</Col>
+      <Col class="border-gray-700">Column 1</Col>
+      <Col class="border-t border-red-500">Column 2</Col>
       <Col class="border border-violet-500">
         <p>Column 3</p>
         <Row class="border border-green-500">
