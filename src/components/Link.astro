@@ -1,19 +1,17 @@
 ---
 import { twMerge } from "tailwind-merge";
 import {
-  pop,
-  extractFromClassList,
-  extractValueFromPaddingClass,
-  extractValueFromFontSizeClass,
-  extractValueFromBorderRadiusClass,
-  extractValueFromHeightClass,
+  findTailwindClassForCssProperty,
+  findValueInPxForCssProperty,
+  findUrlForCssProperty,
+  findValueForCssProperty,
+  findBorderValueForCssProperty,
+  calcPx,
 } from "@/utils/utils";
 import IfOutlook from "./IfOutlook.astro";
 import IfNotOutlook from "./IfNotOutlook.astro";
 import tailwindConfig from "tailwind.config";
 import resolveConfig from "tailwindcss/resolveConfig";
-import { type StandardPropertiesHyphen } from "csstype";
-import { distStyles } from "@/assets/__styles-dist";
 
 const tailwindConfigResolved = resolveConfig(tailwindConfig);
 
@@ -24,108 +22,75 @@ interface Props {
   href?: string;
 }
 
-const { class: className = "", href = "#" } = Astro.props;
-const classList = className.split(" ").map((c) => c.trim());
+let { class: className = "", href = "#" } = Astro.props;
 
-const width = extractFromClassList(classList, "width");
-const margin = extractFromClassList(classList, "margin");
-const bgImage = extractFromClassList(classList, "bg-url");
-const bgImageUrl = bgImage.replace(/^bg-\[url\(['"](.*)['"]\)\]/, "$1");
-const bgColor = extractFromClassList(classList, "bg-color", "#ffffff");
-const borderColor = extractFromClassList(classList, "border-color", "#ffffff");
-// const padding = extractFromClassList(classList, "padding");
-// const paddingValues = extractValueFromPaddingClass(padding);
-const fontSize = extractFromClassList(classList, "font-size", tailwindConfigResolved.theme.fontSize.base || "16px");
-const fontSizePx = extractValueFromFontSizeClass(fontSize);
-// const height = extractFromClassList(classList, "height", `${fontSizePx + paddingValues.top + paddingValues.bottom}px`);
-const height = extractFromClassList(classList, "height", `${fontSizePx}px`);
-const heightPx = extractValueFromHeightClass(height);
-const borderRadius = extractFromClassList(classList, "border-radius");
-const borderRadiusPx = extractValueFromBorderRadiusClass(borderRadius);
+const [widthClass, classWithoutWidth] = findTailwindClassForCssProperty("width", className);
+className = classWithoutWidth;
+
+const [marginClass, classWithoutMargin] = findTailwindClassForCssProperty("margin", className);
+className = classWithoutMargin;
+
+const [bgImageClass, classWithoutBgImage] = findTailwindClassForCssProperty("background-image", className);
+const bgImageUrl = findUrlForCssProperty("background-image", className);
+className = classWithoutBgImage;
+
+const [bgColorClass, classWithoutBgColor] = findTailwindClassForCssProperty("background-color", className);
+const bgColor = findValueForCssProperty("background-color", className);
+className = classWithoutBgColor;
+
+const [borderClass, classWithoutBorder] = findTailwindClassForCssProperty("border", className);
+const [borderTopClass, classWithoutBorderTop] = findTailwindClassForCssProperty("border-top", className);
+const [borderBottomClass, classWithoutBorderBottom] = findTailwindClassForCssProperty("border-bottom", className);
+const [borderLeftClass, classWithoutBorderLeft] = findTailwindClassForCssProperty("border-left", className);
+const [borderRightClass, classWithoutBorderRight] = findTailwindClassForCssProperty("border-right", className);
+const { color: borderColor } = findBorderValueForCssProperty("border", className);
+className = classWithoutBorder;
+className = classWithoutBorderTop;
+className = classWithoutBorderBottom;
+className = classWithoutBorderLeft;
+className = classWithoutBorderRight;
+
+const [fontSizeClass, classWithoutFontSize] = findTailwindClassForCssProperty("font-size", className);
+const fontSizePx =
+  findValueInPxForCssProperty("font-size", className) || calcPx(tailwindConfigResolved.theme.fontSize.base);
+className = classWithoutFontSize;
+
+const paddingTop = findValueInPxForCssProperty("padding-top", className) || 0;
+const paddingBottom = findValueInPxForCssProperty("padding-bottom", className) || 0;
+
+const [heightClass, classWithoutHeight] = findTailwindClassForCssProperty("height", className);
+const heightPx = findValueInPxForCssProperty("height", className) || fontSizePx + paddingTop + paddingBottom;
+className = classWithoutHeight;
+
+const [borderRadiusClass, classWithoutBorderRadius] = findTailwindClassForCssProperty("border-radius", className);
+const borderRadiusPx = findValueInPxForCssProperty("border-radius", className) || 0;
+className = classWithoutBorderRadius;
 
 const vRoundRectAttrs: Record<string, string> = {};
 
 // fill
-if (bgImageUrl.length > 0) {
+if (bgImageUrl) {
   vRoundRectAttrs.fill = "t";
-} else if (bgColor.length > 0) {
+} else if (bgColor) {
   vRoundRectAttrs.fillcolor = bgColor;
 }
 
 // stroke color
-if (borderColor.length > 0) {
+if (borderColor) {
   vRoundRectAttrs.strokecolor = borderColor;
 } else {
   vRoundRectAttrs.stroke = "f";
 }
 
 // arcsize (border-radius)
-
-if (borderRadius.length > 0) {
-  vRoundRectAttrs.arcsize = (borderRadiusPx / heightPx) * 100 + "%";
-}
-
-// const str = "bg-gray-300 bg-cover bg-[#454545]";
-// findme("background-image", str); // => ""
-// findme("background-color", str); // => "bg-gray-300"
-// className
-//   .split(" ")
-//   .map((c) => c.trim())
-//   .forEach((c) => {
-//     console.log(c, distStyles[`.${c}`]);
-//   });
-
-// function cssPropertyToJsx(property: string): string {
-//   return property.replace(/(-.)/g, (match) => match[1].toUpperCase());
-// }
-
-function findTailwindClassForCssSelector(selector: keyof StandardPropertiesHyphen, classStr: string) {
-  return classStr
-    .split(" ")
-    .map((c) => c.trim())
-    .findLast((c) => {
-      const cssDeclarationObj = distStyles[`.${c}` as keyof typeof distStyles];
-      return Object.keys(cssDeclarationObj).some((key) => key === selector);
-    });
-}
-
-function findValueForCssSelector(selector: keyof StandardPropertiesHyphen, classStr: string) {
-  const twClass = findTailwindClassForCssSelector(selector, classStr);
-
-  if (!twClass) {
-    return "";
-  }
-
-  const cssDeclarationObj = distStyles[`.${twClass}` as keyof typeof distStyles];
-  for (const [key, val] of Object.entries(cssDeclarationObj)) {
-    if (key === selector) {
-      return `${val}`;
-    }
-  }
-
-  return "";
-}
-
-console.log("\n");
-const _bgImageUrl = findTailwindClassForCssSelector("background-image", className);
-const _bgImageUrlValue = findValueForCssSelector("background-image", className);
-console.log("bgImageUrl", _bgImageUrl, _bgImageUrlValue);
-const paddingTop = findTailwindClassForCssSelector("padding-top", className);
-const paddingTopValue = findValueForCssSelector("padding-top", className);
-console.log("paddingTop", paddingTop, paddingTopValue);
-const paddingBottom = findTailwindClassForCssSelector("padding-bottom", className);
-const paddingBottomValue = findValueForCssSelector("padding-bottom", className);
-console.log("paddingBottom", paddingBottom, paddingBottomValue);
-
-// rest
-const rest = [...classList, fontSize].join(" ");
+vRoundRectAttrs.arcsize = (borderRadiusPx / heightPx) * 100 + "%";
 ---
 
-<table class={twMerge(width, margin)}>
+<table class={twMerge(widthClass, marginClass)}>
   <tbody>
     <tr>
       <td>
-        <table class={twMerge(width)}>
+        <table class={twMerge(widthClass)}>
           <tbody>
             <tr>
               <td>
@@ -136,12 +101,12 @@ const rest = [...classList, fontSize].join(" ");
                     xmlns:w="urn:schemas-microsoft-com:office:word"
                     href={href}
                     style="v-text-anchor:middle;"
-                    class={twMerge(width, height)}
+                    class={twMerge(widthClass, heightClass)}
                     {...vRoundRectAttrs}
                   >
-                    {bgImageUrl.length > 0 && <v:fill type="tile" src={bgImageUrl} color={bgColor} />}
+                    {bgImageUrl && <v:fill type="tile" src={bgImageUrl} color={bgColor} />}
                     <w:anchorlock></w:anchorlock>
-                    <center class={twMerge(rest, fontSize)}>
+                    <center class={twMerge(className, fontSizeClass)}>
                       <slot />
                     </center>
                   </v:roundrect>
@@ -149,7 +114,18 @@ const rest = [...classList, fontSize].join(" ");
 
                 {/* Not Outlook */}
                 <IfNotOutlook>
-                  <a href={href} class={twMerge("inline-block", rest, width, height, bgImage, bgColor, borderRadius)}>
+                  <a
+                    href={href}
+                    class={twMerge(
+                      "inline-block",
+                      className,
+                      widthClass,
+                      heightClass,
+                      bgImageClass,
+                      bgColorClass,
+                      borderRadiusClass
+                    )}
+                  >
                     <slot />
                   </a>
                 </IfNotOutlook>

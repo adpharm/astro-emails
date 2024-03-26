@@ -1,30 +1,49 @@
 ---
 import { twMerge } from "tailwind-merge";
-import { pop } from "@/utils/utils";
+import {
+  findTailwindClassForCssProperty,
+  findValueInPxForCssProperty,
+  findUrlForCssProperty,
+  findValueForCssProperty,
+  findBorderValueForCssProperty,
+  calcPx,
+} from "@/utils/utils";
 
 interface Props {
   class?: string;
   id?: string;
 }
 
-const { class: className, id } = Astro.props;
-const classList = (className || "").split(" ").map((c) => c.trim());
-
-// padding regex is p-<number from 1 to 12>, px-<number from 1 to 12>, py-<number from 1 to 12>, pt-<number from 1 to 12>, pr-<number from 1 to 12>, pb-<number from 1 to 12>, pl-<number from 1 to 12>
-const padding = pop(classList, /(p|px|py|pt|pr|pb|pl)-\d+/);
+let { class: className = "", id } = Astro.props;
 
 const tableProps: Record<string, string> = {};
 if (id) {
   tableProps.id = id;
 }
 
-const rest = classList.join(" ");
+const [paddingClass, classWithoutPadding] = findTailwindClassForCssProperty("padding", className);
+const [paddingTop, classWithoutPaddingTop] = findTailwindClassForCssProperty("padding-top", classWithoutPadding);
+const [paddingRight, classWithoutPaddingRight] = findTailwindClassForCssProperty(
+  "padding-right",
+  classWithoutPaddingTop
+);
+const [paddingBottom, classWithoutPaddingBottom] = findTailwindClassForCssProperty(
+  "padding-bottom",
+  classWithoutPaddingRight
+);
+const [paddingLeft, classWithoutPaddingLeft] = findTailwindClassForCssProperty(
+  "padding-left",
+  classWithoutPaddingBottom
+);
+className = classWithoutPaddingLeft;
+
+const [textAlignClass, classWithoutTextAlign] = findTailwindClassForCssProperty("text-align", className);
 ---
 
-<table {...tableProps} class={twMerge("w-full", rest)}>
+<table {...tableProps} class={twMerge("w-full", className)}>
   <tbody>
     <tr>
-      <td align="center" class={twMerge(padding)}>
+      <td class={twMerge(paddingClass, paddingTop, paddingRight, paddingBottom, paddingLeft, textAlignClass)}>
         <slot />
       </td>
     </tr>

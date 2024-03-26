@@ -1,0 +1,99 @@
+---
+import { twMerge } from "tailwind-merge";
+import {
+  findTailwindClassForCssProperty,
+  findValueInPxForCssProperty,
+  findUrlForCssProperty,
+  findValueForCssProperty,
+  findBorderValueForCssProperty,
+  calcPx,
+} from "@/utils/utils";
+import type { ImageMetadata } from "astro";
+import { getImage } from "astro:assets";
+import IfOutlook from "./IfOutlook.astro";
+import IfNotOutlook from "./IfNotOutlook.astro";
+import tailwindConfig from "tailwind.config";
+import resolveConfig from "tailwindcss/resolveConfig";
+
+const tailwindConfigResolved = resolveConfig(tailwindConfig);
+
+// Much of the outlook stuff was taken from https://buttons.cm/
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  // widthInPx: number;
+  // heightInPx?: number;
+  href?: string;
+  class?: string;
+}
+
+let {
+  class: className = "",
+  src = "https://via.placeholder.com/600x400",
+  alt = "",
+  // widthInPx = 700,
+  // heightInPx,
+} = Astro.props;
+
+// const [widthClass, classWithoutWidth] = findTailwindClassForCssProperty("width", className);
+// className = classWithoutWidth;
+
+const widthInPx = findValueInPxForCssProperty("width", className) || undefined;
+const heightInPx = findValueInPxForCssProperty("height", className) || undefined;
+
+const img = await getImage({
+  src,
+  format: "png",
+  // width: widthInPx,
+  // height: heightInPx,
+  // quality: 100,
+  quality: "max",
+});
+
+const [bgColorClass, classWithoutBgColor] = findTailwindClassForCssProperty("background-color", className);
+className = classWithoutBgColor;
+
+const [paddingClass, classWithoutPadding] = findTailwindClassForCssProperty("padding", className);
+const [paddingTop, classWithoutPaddingTop] = findTailwindClassForCssProperty("padding-top", classWithoutPadding);
+const [paddingRight, classWithoutPaddingRight] = findTailwindClassForCssProperty(
+  "padding-right",
+  classWithoutPaddingTop
+);
+const [paddingBottom, classWithoutPaddingBottom] = findTailwindClassForCssProperty(
+  "padding-bottom",
+  classWithoutPaddingRight
+);
+const [paddingLeft, classWithoutPaddingLeft] = findTailwindClassForCssProperty(
+  "padding-left",
+  classWithoutPaddingBottom
+);
+className = classWithoutPaddingLeft;
+
+const [objectPositionClass, classWithoutObjectPosition] = findTailwindClassForCssProperty("object-position", className);
+className = classWithoutObjectPosition;
+
+const [objectFitClass, classWithoutObjectFit] = findTailwindClassForCssProperty("object-fit", className);
+className = classWithoutObjectFit;
+
+const [textAlignClass, classWithoutTextAlign] = findTailwindClassForCssProperty("text-align", className);
+
+// TODO:
+// - styled alt: https://www.litmus.com/blog/the-ultimate-guide-to-styled-alt-text-in-email
+---
+
+<table class={twMerge("w-full", className)}>
+  <tbody>
+    <tr>
+      <td class={twMerge(paddingClass, paddingTop, paddingRight, paddingBottom, paddingLeft, textAlignClass)}>
+        <img
+          src={img.src}
+          alt={alt}
+          class={twMerge(objectPositionClass, objectFitClass, bgColorClass)}
+          width={widthInPx}
+          height={heightInPx}
+        />
+      </td>
+    </tr>
+  </tbody>
+</table>

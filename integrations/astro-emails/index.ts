@@ -167,29 +167,6 @@ export default function createAstroEmailsIntegration(options?: AstroEmailsIntegr
           }
         });
 
-        // Parse CSS into AST (Abstract Syntax Tree)
-        // const ast = css.parse(cssContent);
-
-        // Convert AST into JavaScript object
-        // const cssObject: Record<string, Record<string, any>> = {};
-
-        // ast.stylesheet?.rules.forEach((rule: css.Rule) => {
-        //   if (rule.type === "rule") {
-        //     const selectors = rule.selectors;
-        //     const declarations: Record<string, any> = {};
-
-        //     rule.declarations?.forEach((declaration) => {
-        //       if ("value" in declaration && declaration.property) {
-        //         declarations[declaration.property] = declaration.value;
-        //       }
-        //     });
-
-        //     selectors?.forEach((selector) => {
-        //       cssObject[selector] = declarations;
-        //     });
-        //   }
-        // });
-
         // Write to file
         await fs.writeFile(
           `${workingDir}/src/assets/__styles-dist.ts`,
@@ -217,6 +194,8 @@ export default function createAstroEmailsIntegration(options?: AstroEmailsIntegr
  * @returns
  */
 function vitePluginAstroEmailsHMR(): PluginOption {
+  let isInitBuild = true;
+  let isBuilding = false;
   return {
     name: "astro-emails-hmr",
     // only apply to serve command
@@ -248,13 +227,25 @@ function vitePluginAstroEmailsHMR(): PluginOption {
         return;
       }
 
-      // TODO: throttle?
+      if (isBuilding || isInitBuild) {
+        server.config.logger.info(`Hot update: already building, skipping...`);
+
+        if (isInitBuild) isInitBuild = false;
+        return;
+      }
+
+      server.config.logger.info(`Hot update: triggering build...`);
+
+      isBuilding = true;
+
       await buildAstro({});
       await injectHMRInHtml(server.config.build.outDir);
 
       // TODO: configure path?
       server.hot.send({ type: "full-reload" });
       // server.hot.send({ type: "full-reload", path: "*" });
+
+      isBuilding = false;
     },
   };
 }

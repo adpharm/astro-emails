@@ -260,6 +260,7 @@ export const tailwindStrictConfig = {
     "fontStyle",
     "textAlign",
     "textDecoration",
+    "textTransform",
     // sizing
     "width",
     "height",
@@ -327,9 +328,9 @@ export const tailwindStrictConfig = {
           boxSizing: "border-box",
         },
         // Default text styles
-        h1: { fontSize: theme("fontSize.2xl") },
-        h2: { fontSize: theme("fontSize.xl") },
-        h3: { fontSize: theme("fontSize.lg") },
+        h1: { fontSize: theme("fontSize.4xl") },
+        h2: { fontSize: theme("fontSize.3xl") },
+        h3: { fontSize: theme("fontSize.xl") },
         p: { fontWeight: "400" },
         // Image styles
         img: {

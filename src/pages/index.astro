@@ -6,6 +6,8 @@ import Col from "@/components/Col.astro";
 import Link from "@/components/Link.astro";
 import Div from "@/components/Div.astro";
 import Spacer from "@/components/Spacer.astro";
+import Image from "@/components/Image.astro";
+import Logo from "@/assets/images/empaveli-logo.png";
 
 interface Props extends ComponentProps {}
 
@@ -16,6 +18,13 @@ const { lang } = Astro.props;
   <Link href="#" class="bg-violet-500 text-center no-underline text-white w-full py-2">
     Email not loading correctly? Click here to view in your browser
   </Link>
+
+  <Image src={Logo} alt="Empaveli" class="py-12 h-24 bg-red-100 object-contain object-left text-left" />
+
+  <Div class="bg-gray-100 px-12 py-4 text-left">
+    <h1 class="text-rose-500 uppercase">Now Reimbursed</h1>
+    <h2 class="text-gray-600">through provincial formulary in select provinces (restrictions may apply)</h2>
+  </Div>
 
   <Div>
     <Row>

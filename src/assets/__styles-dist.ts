@@ -18,13 +18,13 @@ export const distStyles = {
     "box-sizing": "border-box"
   },
   "h1": {
-    "font-size": "24px"
+    "font-size": "36px"
   },
   "h2": {
-    "font-size": "20px"
+    "font-size": "30px"
   },
   "h3": {
-    "font-size": "18px"
+    "font-size": "20px"
   },
   "p": {
     "font-weight": "400"
@@ -43,6 +43,9 @@ export const distStyles = {
   },
   ".hidden": {
     "display": "none"
+  },
+  ".border-t-2-gray-200": {
+    "border-top": "2px solid #e5e7eb"
   },
   ".border-t-4-dashed-black": {
     "border-top": "4px dashed #000"
@@ -74,11 +77,17 @@ export const distStyles = {
   ".border-violet-500": {
     "border": "1px solid #8b5cf6"
   },
+  ".h-24": {
+    "height": "96px"
+  },
   ".h-64": {
     "height": "256px"
   },
   ".w-1": {
     "width": "4px"
+  },
+  ".w-1/2": {
+    "width": "50%"
   },
   ".w-1/3": {
     "width": "33.333333%"
@@ -94,6 +103,9 @@ export const distStyles = {
   },
   ".max-w-full": {
     "max-width": "100%"
+  },
+  ".max-w-screen": {
+    "max-width": "100vw"
   },
   ".rounded-full": {
     "border-radius": "999px"
@@ -134,9 +146,28 @@ export const distStyles = {
   ".bg-cover": {
     "background-size": "cover"
   },
+  ".object-contain": {
+    "-o-object-fit": "contain",
+    "object-fit": "contain"
+  },
+  ".object-left": {
+    "-o-object-position": "left",
+    "object-position": "left"
+  },
+  ".p-4": {
+    "padding": "16px"
+  },
+  ".px-12": {
+    "padding-left": "48px",
+    "padding-right": "48px"
+  },
   ".px-4": {
     "padding-left": "16px",
     "padding-right": "16px"
+  },
+  ".py-12": {
+    "padding-top": "48px",
+    "padding-bottom": "48px"
   },
   ".py-2": {
     "padding-top": "8px",
@@ -146,14 +177,34 @@ export const distStyles = {
     "padding-top": "80px",
     "padding-bottom": "80px"
   },
+  ".py-4": {
+    "padding-top": "16px",
+    "padding-bottom": "16px"
+  },
+  ".py-6": {
+    "padding-top": "24px",
+    "padding-bottom": "24px"
+  },
   ".pb-8": {
     "padding-bottom": "32px"
+  },
+  ".text-left": {
+    "text-align": "left"
   },
   ".text-center": {
     "text-align": "center"
   },
   ".text-xs": {
     "font-size": "12px"
+  },
+  ".uppercase": {
+    "text-transform": "uppercase"
+  },
+  ".text-gray-600": {
+    "color": "#4b5563"
+  },
+  ".text-rose-500": {
+    "color": "#f43f5e"
   },
   ".text-white": {
     "color": "#fff"
