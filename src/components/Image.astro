@@ -77,6 +77,8 @@ const [objectFitClass, classWithoutObjectFit] = findTailwindClassForCssProperty(
 className = classWithoutObjectFit;
 
 const [textAlignClass, classWithoutTextAlign] = findTailwindClassForCssProperty("text-align", className);
+const textAlign = findValueForCssProperty("text-align", className) as astroHTML.JSX.TdHTMLAttributes["align"];
+// className = classWithoutTextAlign;
 
 // TODO:
 // - styled alt: https://www.litmus.com/blog/the-ultimate-guide-to-styled-alt-text-in-email

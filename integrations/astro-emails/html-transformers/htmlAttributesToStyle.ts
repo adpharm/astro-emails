@@ -31,40 +31,53 @@ export async function htmlAttributesToStyle(htmlfile: string) {
 
           switch (attribute) {
             case "bgcolor":
+              if (nodeStyle && nodeStyle.includes("background-color")) break;
               cssToInline.push(`background-color: ${value}`);
               break;
 
             case "background":
+              if (nodeStyle && nodeStyle.includes("background-image")) break;
               cssToInline.push(`background-image: url('${value}')`);
               break;
 
             case "width":
+              if (nodeStyle && nodeStyle.includes(";width:")) break;
+              if (nodeStyle && nodeStyle.includes("; width:")) break;
               value = Number.parseInt(value, 10) + (value.match(/px|%/) || "px");
               cssToInline.push(`width: ${value}`);
               break;
 
             case "height":
+              if (nodeStyle && nodeStyle.includes(";height:")) break;
+              if (nodeStyle && nodeStyle.includes("; height:")) break;
               value = Number.parseInt(value, 10) + (value.match(/px|%/) || "px");
               cssToInline.push(`height: ${value}`);
               break;
 
             case "align":
               if (node.tag !== "table") {
-                return cssToInline.push(`text-align: ${value}`);
+                if (!nodeStyle || !nodeStyle.includes("text-align:")) {
+                  cssToInline.push(`text-align: ${value}`);
+                }
               }
 
               if (["left", "right"].includes(value)) {
-                cssToInline.push(`float: ${value}`);
+                if (!nodeStyle || !nodeStyle.includes("float:")) {
+                  cssToInline.push(`float: ${value}`);
+                }
               }
 
               if (value === "center") {
-                cssToInline.push("margin-left: auto", "margin-right: auto");
+                if (!nodeStyle || (!nodeStyle.includes("margin-left:") && !nodeStyle.includes("margin-right:"))) {
+                  cssToInline.push("margin-left: auto", "margin-right: auto");
+                }
               }
-
               break;
 
             case "valign":
-              cssToInline.push(`vertical-align: ${value}`);
+              if (!nodeStyle || !nodeStyle.includes("vertical-align:")) {
+                cssToInline.push(`vertical-align: ${value}`);
+              }
               break;
 
             // No default

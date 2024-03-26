@@ -23,8 +23,8 @@ export async function emailifyHtml(dir: string) {
   await forEachHtmlFile(dir, async (html) => {
     html = await makeSafeClasses(html);
     html = await purgeWidowWords(html);
-    html = await htmlAttributesToStyle(html);
     html = await inlineCSS(html);
+    html = await htmlAttributesToStyle(html);
     html = await shorthandInlineCSS(html);
     html = await addAttributes(html);
     html = await purgeCSS(html);

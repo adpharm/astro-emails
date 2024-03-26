@@ -10,5 +10,8 @@ import juice from "juice";
  */
 export async function inlineCSS(htmlfile: string) {
   juice.excludedProperties = ["--tw-shadow"];
-  return juice(htmlfile, { removeStyleTags: false });
+
+  // juice.tableElements = ["TABLE", "TH", "TR", "CAPTION", "COLGROUP", "COL", "THEAD", "TBODY", "TFOOT"];
+
+  return juice(htmlfile, { applyAttributesTableElements: true, removeStyleTags: false });
 }

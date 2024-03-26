@@ -15,18 +15,24 @@ interface Props {
 
 let { class: classname = "" } = Astro.props;
 
-const [widthClass, classWithoutW] = findTailwindClassForCssProperty("width", classname);
-classname = classWithoutW;
-console.log(widthClass);
+let [widthClass, classWithoutW] = findTailwindClassForCssProperty("width", classname);
+// widthClass = widthClass.length > 0 ? `!${widthClass}` : "";
+// if (widthClass.length > 0) {
+//   console.log("widthClass", widthClass);
+// }
+
+const [textAlignClass, classWithoutTextAlign] = findTailwindClassForCssProperty("text-align", classWithoutW);
 ---
 
-<th class={twMerge("w-full col", widthClass.length > 0 ? `!${widthClass}` : "")}>
+{/* TODO: Widths! */}
+
+<th class={`${twMerge("w-full col", widthClass)}`}>
   <table class={twMerge("w-full", classname)}>
     <tbody>
       <th>
         <slot />
       </th>
-      <th class="expander"></th>
+      {/* <th class="expander"></th> */}
     </tbody>
   </table>
 </th>

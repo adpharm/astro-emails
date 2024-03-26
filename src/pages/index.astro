@@ -8,6 +8,7 @@ import Div from "@/components/Div.astro";
 import Spacer from "@/components/Spacer.astro";
 import Image from "@/components/Image.astro";
 import Logo from "@/assets/images/empaveli-logo.png";
+import SobiLogo from "@/assets/images/sobi-logo.png";
 
 interface Props extends ComponentProps {}
 
@@ -15,14 +16,14 @@ const { lang } = Astro.props;
 ---
 
 <Layout lang={lang} subject="Welcome to Astro, Ben." previewText="">
-  <Link href="#" class="bg-violet-500 text-center no-underline text-white w-full py-2">
+  <Link href="#" class="bg-purple-950/80 text-center no-underline text-white w-full py-2">
     Email not loading correctly? Click here to view in your browser
   </Link>
 
-  <Image src={Logo} alt="Empaveli" class="py-12 h-24 bg-red-100 object-contain object-left text-left" />
+  <Image src={Logo} alt="Empaveli" class="pt-14 pb-8 h-24 bg-red-100 object-contain object-left text-left" />
 
-  <Div class="bg-gray-200 px-12 py-4 text-left">
-    <h1 class="text-rose-500 uppercase font-semibold text-3xl">Now Reimbursed</h1>
+  <Div class="bg-slate-200 px-12 py-4 text-left">
+    <h1 class="text-rose-500 uppercase font-semibold text-3xl -tracking-[1px]">Now Reimbursed</h1>
     <h2 class="text-gray-600 font-semibold text-xl">
       through provincial formulary in select provinces (restrictions may apply)
     </h2>
@@ -37,57 +38,55 @@ const { lang } = Astro.props;
     </p>
   </Div>
 
-  <Div class="bg-gray-500 py-5 px-12">
+  <Div class="bg-slate-500 py-5 px-12">
     <Row>
-      <Col class="w-1/2">
-        <h3 class="text-white font-semibold text-xl text-center">
+      <Col class="w-3/5">
+        <h3 class="text-white font-bold text-xl text-center -tracking-[1px]">
           Visit your provincial formulary for complete coverage criteria.
         </h3>
       </Col>
     </Row>
+
+    <Div class="py-4">
+      <p class="text-white font-semibold text-lg">
+        Contact your local Sobi representative for more information: [name placeholder] at [email placeholder]
+      </p>
+    </Div>
   </Div>
 
-  <Div>
+  <Div class="px-12 py-12">
+    <p no-widows class="py-2">
+      <sup>Pr</sup>EMPAVELI<sup>TM</sup> (pegcetacoplan) is a complement inhibitor indicated for the treatment of adult patients
+      with paroxysmal nocturnal hemoglobinuria (PNH) who have an inadequate response to, or are intolerant of, a C5 inhibitor.
+    </p>
+
+    <p no-widows class="py-2">
+      Please consult the EMPAVELI Product Monograph at sobi.ca/EMPAVELI_ PM_EN for important information relating to
+      contraindications, warnings, precautions, adverse reactions, interactions, dosing, and conditions of clinical use.
+    </p>
+
+    <p no-widows class="py-2">
+      The Product Monograph is also available by calling our medical department at 1-866-773-5274.
+    </p>
+
+    <p no-widows class="pt-6">
+      <span class="font-bold uppercase">REFERENCE:</span> EMPAVELI Product Monograph, Swedish Orphan Biovitrum AB (publ),
+      Inc. December 7, 2022.
+    </p>
+  </Div>
+
+  <Div class="pb-8">
     <Row>
-      <Col class="bg-gray-100 border-t-4-yellow-500 border-l-4-yellow-500 sm:bg-red-100 lg:bg-blue-200">Hello</Col>
-      <Col class="bg-gray-200 lg:w-[500px]">
-        <h1>Welcome to Astro</h1>
-        <p>This is a simple Astro starter template. It includes a few common features to help you get started.</p>
-        <p>For example, here is a grid system.</p>
-        <p>
-          <!-- <Link href="https://docs.astro.build/" target="_blank">Read the Astro documentation</Link> -->
-        </p>
-      </Col>
-      <Col class="bg-gray-300 border-t-4-dashed-black">Here I am</Col>
-    </Row>
+      <Col class="w-2/3 text-left">
+        <Image src={Logo} alt="Empaveli" class="h-20 bg-red-100 object-contain object-left text-left" />
 
-    <Spacer px="100" />
-    <p>I'm in between spacers</p>
-    <p>I may be beside you!</p>
-    <Link
-      href="#"
-      class="text-white py-2 pb-8 px-4 rounded-full bg-green-500 bg-[url('https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg')]"
-    >
-      I'm a link, from the link component
-    </Link>
-    <Spacer px="100" />
-
-    <Row class="py-20 bg-gray-200">
-      <Col class="border-gray-700">Column 1</Col>
-      <Col class="border-t border-red-500">Column 2</Col>
-      <Col class="border border-violet-500">
-        <p>Column 3</p>
-        <Row class="border border-green-500">
-          <Col class="border border-gray-500 w-1/3">Column 3.1</Col>
-          <Col>Column 3.2</Col>
-        </Row>
+        <p class="text-slate-700 text-xs py-4">Empaveli is a trademark of Swedish Orphan Biovitrum AB (publ).</p>
+        <p class="text-slate-700 text-xs pb-4">&copy; 2024 Sobi Canada, Inc. All rights reserved.</p>
+        <p class="text-slate-700 text-xs pb-4">PP-XXXXX 01/24</p>
       </Col>
-      <Col class="border border-indigo-500">
-        <p>Column 4</p>
-        <Row class="border border-blue-200">
-          <Col class="border border-gray-500">Column 4.1</Col>
-          <Col>Column 4.2</Col>
-        </Row>
+
+      <Col class="bg-gray-100 text-right">
+        <Image src={SobiLogo} alt="Sobi" class="h-20 bg-red-100 object-contain text-right" />
       </Col>
     </Row>
   </Div>

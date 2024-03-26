@@ -41,21 +41,27 @@ export const distStyles = {
     "text-decoration": "underline dotted"
   },
   "h1": {
+    "font-weight": "400",
     "line-height": "1.25"
   },
   "h2": {
+    "font-weight": "400",
     "line-height": "1.25"
   },
   "h3": {
+    "font-weight": "400",
     "line-height": "1.25"
   },
   "h4": {
+    "font-weight": "400",
     "line-height": "1.25"
   },
   "h5": {
+    "font-weight": "400",
     "line-height": "1.25"
   },
   "h6": {
+    "font-weight": "400",
     "line-height": "1.25"
   },
   "a": {
@@ -191,7 +197,8 @@ export const distStyles = {
     "margin": "0"
   },
   "p": {
-    "line-height": "1.25"
+    "font-weight": "400",
+    "line-height": "1.375"
   },
   "fieldset": {
     "margin": "0",
@@ -319,11 +326,23 @@ export const distStyles = {
   ".border-violet-500": {
     "border": "1px solid #8b5cf6"
   },
+  ".h-12": {
+    "height": "48px"
+  },
+  ".h-20": {
+    "height": "80px"
+  },
   ".h-24": {
     "height": "96px"
   },
   ".h-64": {
     "height": "256px"
+  },
+  ".!w-1/2": {
+    "width": "50% !important"
+  },
+  ".!w-2/3": {
+    "width": "66.666667% !important"
   },
   ".w-1": {
     "width": "4px"
@@ -333,6 +352,21 @@ export const distStyles = {
   },
   ".w-1/3": {
     "width": "33.333333%"
+  },
+  ".w-1/6": {
+    "width": "16.666667%"
+  },
+  ".w-2/3": {
+    "width": "66.666667%"
+  },
+  ".w-2/6": {
+    "width": "33.333333%"
+  },
+  ".w-3/5": {
+    "width": "60%"
+  },
+  ".w-5/6": {
+    "width": "83.333333%"
   },
   ".w-64": {
     "width": "256px"
@@ -370,11 +404,38 @@ export const distStyles = {
   ".bg-green-500": {
     "background-color": "#22c55e"
   },
+  ".bg-purple-600": {
+    "background-color": "#9333ea"
+  },
+  ".bg-purple-800": {
+    "background-color": "#6b21a8"
+  },
+  ".bg-purple-900": {
+    "background-color": "#581c87"
+  },
+  ".bg-purple-950": {
+    "background-color": "#3b0764"
+  },
+  ".bg-purple-950/80": {
+    "background-color": "rgb(59 7 100 / 0.8)"
+  },
   ".bg-red-100": {
     "background-color": "#fee2e2"
   },
+  ".bg-slate-100": {
+    "background-color": "#f1f5f9"
+  },
+  ".bg-slate-200": {
+    "background-color": "#e2e8f0"
+  },
+  ".bg-slate-500": {
+    "background-color": "#64748b"
+  },
   ".bg-violet-500": {
     "background-color": "#8b5cf6"
+  },
+  ".bg-violet-700": {
+    "background-color": "#6d28d9"
   },
   ".bg-[url('<url>')]": {
     "background-image": "url('<url>')"
@@ -392,6 +453,10 @@ export const distStyles = {
   ".object-left": {
     "-o-object-position": "left",
     "object-position": "left"
+  },
+  ".object-right": {
+    "-o-object-position": "right",
+    "object-position": "right"
   },
   ".p-4": {
     "padding": "16px"
@@ -428,8 +493,20 @@ export const distStyles = {
     "padding-top": "24px",
     "padding-bottom": "24px"
   },
+  ".pb-4": {
+    "padding-bottom": "16px"
+  },
   ".pb-8": {
     "padding-bottom": "32px"
+  },
+  ".pt-12": {
+    "padding-top": "48px"
+  },
+  ".pt-14": {
+    "padding-top": "56px"
+  },
+  ".pt-6": {
+    "padding-top": "24px"
   },
   ".text-left": {
     "text-align": "left"
@@ -437,8 +514,11 @@ export const distStyles = {
   ".text-center": {
     "text-align": "center"
   },
+  ".text-right": {
+    "text-align": "right"
+  },
   ".text-2xl": {
-    "font-size": "34px"
+    "font-size": "32px"
   },
   ".text-3xl": {
     "font-size": "40px"
@@ -446,11 +526,14 @@ export const distStyles = {
   ".text-4xl": {
     "font-size": "48px"
   },
+  ".text-lg": {
+    "font-size": "22px"
+  },
   ".text-xl": {
-    "font-size": "28px"
+    "font-size": "26px"
   },
   ".text-xs": {
-    "font-size": "14px"
+    "font-size": "13px"
   },
   ".font-bold": {
     "font-weight": "700"
@@ -464,6 +547,18 @@ export const distStyles = {
   ".uppercase": {
     "text-transform": "uppercase"
   },
+  ".-tracking-0": {
+    "letter-spacing": "0"
+  },
+  ".-tracking-0.5": {
+    "letter-spacing": "-2px"
+  },
+  ".-tracking-2": {
+    "letter-spacing": "-8px"
+  },
+  ".-tracking-[1px]": {
+    "letter-spacing": "-1px"
+  },
   ".text-gray-600": {
     "color": "#4b5563"
   },
@@ -472,6 +567,9 @@ export const distStyles = {
   },
   ".text-rose-500": {
     "color": "#f43f5e"
+  },
+  ".text-slate-700": {
+    "color": "#334155"
   },
   ".text-white": {
     "color": "#fff"
@@ -729,9 +827,6 @@ export const distStyles = {
     }
   },
   "@media (min-width: 701px)": {
-    ".lg:w-[500px]": {
-      "width": "500px !important"
-    },
     ".lg:bg-blue-200": {
       "background-color": "#bfdbfe !important"
     }
