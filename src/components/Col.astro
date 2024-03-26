@@ -1,22 +1,27 @@
 ---
 import { twMerge } from "tailwind-merge";
-import { pop } from "@/utils/utils";
+import {
+  findTailwindClassForCssProperty,
+  findValueInPxForCssProperty,
+  findUrlForCssProperty,
+  findValueForCssProperty,
+  findBorderValueForCssProperty,
+  calcPx,
+} from "@/utils/utils";
 
 interface Props {
   class?: string;
 }
 
-const { class: className } = Astro.props;
-const classList = (className || "").split(" ").map((c) => c.trim());
+let { class: classname = "" } = Astro.props;
 
-// width is of the format w-<number from 1 to 12>/<number from 1 to 12> or w-<number from 1 to 12>
-const width = pop(classList, /w-\d+\/\d+|w-\d+/);
-
-const rest = classList.join(" ");
+const [widthClass, classWithoutW] = findTailwindClassForCssProperty("width", classname);
+classname = classWithoutW;
+console.log(widthClass);
 ---
 
-<th class={twMerge("w-full col", width)}>
-  <table class={twMerge("w-full", rest)}>
+<th class={twMerge("w-full col", widthClass.length > 0 ? `!${widthClass}` : "")}>
+  <table class={twMerge("w-full", classname)}>
     <tbody>
       <th>
         <slot />

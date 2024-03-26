@@ -12,6 +12,7 @@ import { minifyHTML } from "./minifyHTML.ts";
 import { purgeEmptyHTMLAttributes } from "./purgeEmptyHTMLAttributes.ts";
 import { purgeCSS } from "./purgeCSS.ts";
 import { injectHMRScript } from "./injectHMRScript.ts";
+import { purgeWidowWords } from "./purgeWidowWords.ts";
 
 /**
  * Make HTML email friendly
@@ -21,6 +22,7 @@ import { injectHMRScript } from "./injectHMRScript.ts";
 export async function emailifyHtml(dir: string) {
   await forEachHtmlFile(dir, async (html) => {
     html = await makeSafeClasses(html);
+    html = await purgeWidowWords(html);
     html = await htmlAttributesToStyle(html);
     html = await inlineCSS(html);
     html = await shorthandInlineCSS(html);

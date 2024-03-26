@@ -1,0 +1,29 @@
+html {
+  @apply font-sans;
+}
+
+body {
+  @apply m-0 p-0 w-full bg-white text-black font-normal antialiased text-base;
+
+  word-break: break-word;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+img {
+  @apply leading-none align-middle;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  @apply leading-tight;
+}

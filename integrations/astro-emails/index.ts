@@ -27,6 +27,7 @@ export default function createAstroEmailsIntegration(options?: AstroEmailsIntegr
     name: "astro-emails",
     hooks: {
       "astro:config:setup": ({ updateConfig, isRestart, logger }) => {
+        // if (isRestart && isInitBuildDone) return;
         if (isRestart) return;
 
         updateConfig({
@@ -97,6 +98,7 @@ export default function createAstroEmailsIntegration(options?: AstroEmailsIntegr
           $.verbose = false;
           // const workingDir = (await $`pwd`).stdout.trim();
           await $`postcss ${workingDir}/src/assets/_styles.css -o ${workingDir}/src/assets/__styles-dist.css`;
+          // TODO: possibly hanging here in some cases?
         });
 
         prepLogger.info("Building CSS objects...");
@@ -194,7 +196,7 @@ export default function createAstroEmailsIntegration(options?: AstroEmailsIntegr
  * @returns
  */
 function vitePluginAstroEmailsHMR(): PluginOption {
-  let isInitBuild = true;
+  let isInitBuildDone = false;
   let isBuilding = false;
   return {
     name: "astro-emails-hmr",
@@ -215,6 +217,8 @@ function vitePluginAstroEmailsHMR(): PluginOption {
 
       await buildAstro({});
       await injectHMRInHtml(config.build.outDir);
+
+      isInitBuildDone = true;
     },
 
     /**
@@ -227,10 +231,8 @@ function vitePluginAstroEmailsHMR(): PluginOption {
         return;
       }
 
-      if (isBuilding || isInitBuild) {
+      if (isBuilding || !isInitBuildDone) {
         server.config.logger.info(`Hot update: already building, skipping...`);
-
-        if (isInitBuild) isInitBuild = false;
         return;
       }
 

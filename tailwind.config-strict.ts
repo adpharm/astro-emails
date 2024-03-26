@@ -85,7 +85,7 @@ export const tailwindStrictConfig = {
     fontFamily: {
       // sensible defaults
       serif: ["Georgia", "Times New Roman", "Lucida Bright", ...defaultTheme.fontFamily.serif],
-      sans: ["Arial", "Verdana", "Trebuchet MS", "Tahoma", ...defaultTheme.fontFamily.sans],
+      sans: ["Arial", "Verdana", "Trebuchet MS", "Tahoma", "ui-sans-serif", "system-ui", "sans-serif"],
       mono: ["Courier New", "Lucida Sans Typewriter", "Consolas", ...defaultTheme.fontFamily.mono],
 
       // source: https://www.cssfontstack.com/
@@ -160,18 +160,16 @@ export const tailwindStrictConfig = {
     fontSize: {
       0: "0",
       xxs: "11px",
-      xs: "12px",
-      "2xs": "13px",
-      sm: "14px",
-      "2sm": "15px",
-      base: "16px",
-      lg: "18px",
-      xl: "20px",
-      "2xl": "24px",
-      "3xl": "30px",
-      "4xl": "36px",
-      "5xl": "48px",
-      "6xl": "60px",
+      xs: "14px",
+      sm: "16px",
+      base: "18px",
+      lg: "22px",
+      xl: "28px",
+      "2xl": "34px",
+      "3xl": "40px",
+      "4xl": "48px",
+      "5xl": "56px",
+      "6xl": "64px",
       "7xl": "72px",
       "8xl": "96px",
       "9xl": "128px",
@@ -179,9 +177,9 @@ export const tailwindStrictConfig = {
     letterSpacing: ({ theme }) => ({
       ...theme("width"),
     }),
-    lineHeight: ({ theme }) => ({
-      ...theme("width"),
-    }),
+    // lineHeight: ({ theme }) => ({
+    //   ...theme("width"),
+    // }),
     maxWidth: ({ theme }) => ({
       ...theme("width"),
       xs: "160px",
@@ -256,6 +254,7 @@ export const tailwindStrictConfig = {
     "textColor",
     "fontFamily",
     "fontSize",
+    "lineHeight",
     "fontWeight",
     "fontStyle",
     "textAlign",
@@ -264,10 +263,10 @@ export const tailwindStrictConfig = {
     // sizing
     "width",
     "height",
-    "maxWidth",
-    "minWidth",
-    "maxHeight",
-    "minHeight",
+    // "maxWidth",
+    // "minWidth",
+    // "maxHeight",
+    // "minHeight",
     "margin",
     "padding",
     "boxSizing",
@@ -281,7 +280,6 @@ export const tailwindStrictConfig = {
     "objectFit",
     "objectPosition",
     "overflow",
-    "lineHeight",
     "backgroundColor",
     "backgroundSize",
     "backgroundImage",
@@ -302,42 +300,44 @@ export const tailwindStrictConfig = {
     "listStylePosition",
     "listStyleType",
     "verticalAlign",
+    "fontSmoothing",
+    "preflight", // TODO: review preflight for email compat https://tailwindcss.com/docs/preflight
   ],
   plugins: [
     // Adding base styles (instead of using CSS stylesheets)
     plugin(function ({ addBase, theme }) {
       addBase({
         // Default html styles
-        html: {
-          fontFamily: theme("fontFamily.sans", defaultTheme.fontFamily.sans),
-        },
+        // html: {
+        //   fontFamily: theme("fontFamily.sans", defaultTheme.fontFamily.sans),
+        // },
         // Default body styles
-        body: {
-          margin: "0",
-          padding: "0",
-          width: "100%",
-          backgroundColor: "#ffffff",
-          color: "#000000",
-          fontWeight: "400",
-          webkitFontSmoothing: "antialiased",
-          wordBreak: "break-word",
-          webkitTextSizeAdjust: "100%",
-          msTextSizeAdjust: "100%",
-          webkitBoxSizing: "border-box",
-          mozBoxSizing: "border-box",
-          boxSizing: "border-box",
-        },
+        // body: {
+        //   margin: "0",
+        //   padding: "0",
+        //   width: "100%",
+        //   backgroundColor: "#ffffff",
+        //   color: "#000000",
+        //   fontWeight: "400",
+        //   webkitFontSmoothing: "antialiased",
+        //   wordBreak: "break-word",
+        //   webkitTextSizeAdjust: "100%",
+        //   msTextSizeAdjust: "100%",
+        //   webkitBoxSizing: "border-box",
+        //   mozBoxSizing: "border-box",
+        //   boxSizing: "border-box",
+        // },
         // Default text styles
-        h1: { fontSize: theme("fontSize.4xl") },
-        h2: { fontSize: theme("fontSize.3xl") },
-        h3: { fontSize: theme("fontSize.xl") },
-        p: { fontWeight: "400" },
+        // h1: { fontSize: theme("fontSize.4xl"), lineHeight: "1.25" },
+        // h2: { fontSize: theme("fontSize.3xl"), lineHeight: "1.25" },
+        // h3: { fontSize: theme("fontSize.xl"), lineHeight: "1.25" },
+        // p: { fontWeight: "400", lineHeight: "1.25" },
         // Image styles
-        img: {
-          maxWidth: "100%",
-          verticalAlign: "middle",
-          lineHeight: "1",
-        },
+        // img: {
+        //   maxWidth: "100%",
+        //   verticalAlign: "middle",
+        //   lineHeight: "1",
+        // },
       });
     }),
     // Adding some sudo-custom utilities

@@ -21,9 +21,30 @@ const { lang } = Astro.props;
 
   <Image src={Logo} alt="Empaveli" class="py-12 h-24 bg-red-100 object-contain object-left text-left" />
 
-  <Div class="bg-gray-100 px-12 py-4 text-left">
-    <h1 class="text-rose-500 uppercase">Now Reimbursed</h1>
-    <h2 class="text-gray-600">through provincial formulary in select provinces (restrictions may apply)</h2>
+  <Div class="bg-gray-200 px-12 py-4 text-left">
+    <h1 class="text-rose-500 uppercase font-semibold text-3xl">Now Reimbursed</h1>
+    <h2 class="text-gray-600 font-semibold text-xl">
+      through provincial formulary in select provinces (restrictions may apply)
+    </h2>
+  </Div>
+
+  <Div class="px-12 py-6">
+    <p class="text-gray-700">
+      Sobi Canada, Inc. is proud to announce that EMPAVELI is now reimbursed through the provincial formularies (in
+      <span class="font-bold">British Columbia</span>, <span class="font-bold">Alberta</span>, and&nbsp;<span
+        class="font-bold">Quebec</span
+      >)
+    </p>
+  </Div>
+
+  <Div class="bg-gray-500 py-5 px-12">
+    <Row>
+      <Col class="w-1/2">
+        <h3 class="text-white font-semibold text-xl text-center">
+          Visit your provincial formulary for complete coverage criteria.
+        </h3>
+      </Col>
+    </Row>
   </Div>
 
   <Div>
